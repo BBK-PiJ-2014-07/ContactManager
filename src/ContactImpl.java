@@ -1,10 +1,10 @@
 
 public class ContactImpl implements Contact {
 	private int id;
-	private string name;
-	private string notes;
+	private String name;
+	private String notes;
 	
-	public ContactImpl(Int id, String name) {
+	public ContactImpl(int id, String name) {
 		this.id = id;
 		this.name = name;
 		this.notes = null;
