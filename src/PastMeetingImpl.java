@@ -7,10 +7,10 @@ public class PastMeetingImpl implements PastMeeting {
 	private String notes;
 	private Set<Contact> contactList;
 	
-	public PastMeetingImpl(Calendar date, String notes){
+	public PastMeetingImpl(Set<Contact> contacts, Calendar date, String notes){
 		this.meetingDate = date;
 		this.notes = notes;
-		this.contactList = null;
+		this.contactList = contacts;
 		this.id = 1;
 	}
 	
@@ -24,7 +24,7 @@ public class PastMeetingImpl implements PastMeeting {
 
 	public Set<Contact> getContacts() {
 		// TODO Auto-generated method stub
-		return null;
+		return contactList;
 	}
 
 	public String getNotes() {
