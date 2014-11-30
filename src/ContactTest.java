@@ -9,8 +9,9 @@ public class ContactTest {
 	}
 	
 	@Test
-	public void testGetID(){
+	public void testGetId(){
 		//test ID getter
+		assertEquals(person.getId(), 1);
 	}
 	
 	@After
