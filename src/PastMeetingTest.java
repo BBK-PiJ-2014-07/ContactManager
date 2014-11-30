@@ -19,7 +19,7 @@ public class PastMeetingTest {
 		contactSet.add(alan);
 		contactSet.add(sarah);
 		Calendar cal = new GregorianCalendar(2011,11,01);
-		pm = new PastMeetingImpl(cal, "Meeting notes");
+		pm = new PastMeetingImpl(contactSet, cal, "Meeting notes");
 	}
 	
 	@Test
@@ -38,5 +38,10 @@ public class PastMeetingTest {
 	public void testGetContacts(){
 		Set<Contact> newSet = pm.getContacts();
 		assertTrue(newSet.containsAll(contactSet));
+	}
+	
+	@Test
+	public void testGetNotes(){
+		assertEquals(pm.getNotes(), "Meeting notes");
 	}
 }
