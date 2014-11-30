@@ -11,6 +11,7 @@ public class PastMeetingImpl implements PastMeeting {
 		this.meetingDate = date;
 		this.notes = notes;
 		this.contactList = contacts;
+		//need to change this
 		this.id = 1;
 	}
 	
@@ -23,13 +24,11 @@ public class PastMeetingImpl implements PastMeeting {
 	}
 
 	public Set<Contact> getContacts() {
-		// TODO Auto-generated method stub
 		return contactList;
 	}
 
 	public String getNotes() {
-		// TODO Auto-generated method stub
-		return null;
+		return notes;
 	}
 
 }
