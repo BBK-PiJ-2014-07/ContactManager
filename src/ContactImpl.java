@@ -11,24 +11,20 @@ public class ContactImpl implements Contact {
 	}
 
 	public int getId() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	
 	public String getNotes() {
-		// TODO Auto-generated method stub
 		return notes;
 	}
 
 	public void addNotes(String note) {
-		// TODO Auto-generated method stub
-
+		this.notes = note;
 	}
 
 }
