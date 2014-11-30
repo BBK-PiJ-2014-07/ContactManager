@@ -7,7 +7,7 @@ public class ContactImpl implements Contact {
 	public ContactImpl(int id, String name) {
 		this.id = id;
 		this.name = name;
-		this.notes = null;
+		this.notes = "";
 	}
 
 	public int getId() {
@@ -23,7 +23,7 @@ public class ContactImpl implements Contact {
 	
 	public String getNotes() {
 		// TODO Auto-generated method stub
-		return null;
+		return notes;
 	}
 
 	public void addNotes(String note) {
