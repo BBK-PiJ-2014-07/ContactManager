@@ -16,4 +16,10 @@ public class PastMeetingTest {
 	public void testGetId(){
 		assertEquals(pm.getId(), 1);
 	}
+	
+	@Test
+	public void testGetDate(){
+		Calendar newCal = pm.getDate();
+		assertNotNull(newCal);
+	}
 }
