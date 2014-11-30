@@ -1,8 +1,13 @@
 
 public class ContactImpl implements Contact {
-
-	public ContactImpl() {
-		// TODO Auto-generated constructor stub
+	private int id;
+	private string name;
+	private string notes;
+	
+	public ContactImpl(Int id, String name) {
+		this.id = id;
+		this.name = name;
+		this.notes = null;
 	}
 
 	public int getId() {
