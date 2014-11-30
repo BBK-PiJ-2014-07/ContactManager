@@ -20,8 +20,7 @@ public class PastMeetingImpl implements PastMeeting {
 	}
 
 	public Calendar getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return meetingDate;
 	}
 
 	public Set<Contact> getContacts() {
