@@ -27,6 +27,12 @@ public class ContactTest {
 		assertEquals(person.getNotes(), "");
 	}
 	
+	@Test
+	public void testAddNotes(){
+		person.addNotes("Speaks French");
+		assertEquals(person.getNotes(), "Speaks French");
+	}
+	
 	@After
 	public void closeDown(){
 		//close the file
