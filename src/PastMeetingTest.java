@@ -8,7 +8,7 @@ public class PastMeetingTest {
 
 	@Before
 	public void buildUp(){
-		Calendar cal = new GregorianCalendar(2013,12,01);
+		Calendar cal = new GregorianCalendar(2011,11,01);
 		pm = new PastMeetingImpl(cal, "Meeting notes");
 	}
 	
@@ -20,6 +20,7 @@ public class PastMeetingTest {
 	@Test
 	public void testGetDate(){
 		Calendar newCal = pm.getDate();
-		assertNotNull(newCal);
+		assertEquals(newCal.get(newCal.YEAR),2011);
 	}
+	
 }

@@ -1,6 +1,5 @@
 import java.util.Calendar;
 import java.util.Set;
-import java.util.GregorianCalendar;
 
 public class PastMeetingImpl implements PastMeeting {
 	private Calendar meetingDate;
