@@ -17,6 +17,11 @@ public class ContactTest {
 		assertEquals(person.getId(), 1);
 	}
 	
+	@Test
+	public void testGetName(){
+		assertEquals(person.getName(), "Alan");
+	}
+	
 	@After
 	public void closeDown(){
 		//close the file
