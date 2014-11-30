@@ -12,5 +12,8 @@ public class PastMeetingTest {
 		pm = new PastMeetingImpl(cal, "Meeting notes");
 	}
 	
-
+	@Test
+	public void testGetId(){
+		assertEquals(pm.getId(), 1);
+	}
 }
