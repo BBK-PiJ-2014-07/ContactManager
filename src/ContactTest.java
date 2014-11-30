@@ -3,9 +3,11 @@ import static org.junit.Assert.*;
 
 
 public class ContactTest {
+	private Contact person;
+	
 	@Before
 	public void buildUp(){
-		Contact person = new ContactImpl(1, "Alan");
+		person = new ContactImpl(1, "Alan");
 		//open the file, create details
 	}
 	
