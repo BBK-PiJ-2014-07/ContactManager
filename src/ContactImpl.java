@@ -17,7 +17,7 @@ public class ContactImpl implements Contact {
 
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	
