@@ -4,10 +4,11 @@ public class ContactImpl implements Contact {
 	private String name;
 	private String notes;
 	
-	public ContactImpl(int id, String name) {
-		this.id = id;
+	public ContactImpl(String name, String notes) {
+		//how to generate a unique ID number? 
+		//this.id = id;
 		this.name = name;
-		this.notes = "";
+		this.notes = notes;
 	}
 
 	public int getId() {
@@ -24,7 +25,8 @@ public class ContactImpl implements Contact {
 	}
 
 	public void addNotes(String note) {
-		this.notes = note;
+		//concatenate old notes with new notes
+		notes = notes + "; " +  note;
 	}
 
 }
