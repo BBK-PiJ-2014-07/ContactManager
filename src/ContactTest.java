@@ -7,7 +7,7 @@ public class ContactTest {
 	
 	@Before
 	public void buildUp(){
-		person = new ContactImpl(1, "Alan");
+		person = new ContactImpl (1, "Alan", "Likes cheese");
 		//open the file, create details
 	}
 	
@@ -24,13 +24,14 @@ public class ContactTest {
 	
 	@Test
 	public void testGetNotes(){
-		assertEquals(person.getNotes(), "");
+		assertEquals(person.getNotes(), "Likes cheese");
 	}
 	
 	@Test
 	public void testAddNotes(){
 		person.addNotes("Speaks French");
-		assertEquals(person.getNotes(), "Speaks French");
+		System.out.println(person.getNotes());
+		assertEquals(person.getNotes(), "Likes cheese, Speaks French");
 	}
 	
 	@After
