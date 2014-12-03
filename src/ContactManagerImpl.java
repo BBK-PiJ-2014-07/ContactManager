@@ -2,6 +2,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import java.io.*;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 //import XML parsers
@@ -11,12 +12,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
  *
  */
 public class ContactManagerImpl implements ContactManager {
-
+	private FileWriter writer;
 	/**
 	 * Put the IO stuff in the constructor?
 	 */
 	public ContactManagerImpl() {
-		// TODO Auto-generated constructor stub
+		try {
+			this.writer = new FileWriter("contacts.xml");
+		} catch (IOException e) {
+			// FileWriter throws exception so need to catch it
+			e.printStackTrace();
+		}
 	}
 
 
