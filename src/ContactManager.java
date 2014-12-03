@@ -146,4 +146,5 @@ public interface ContactManager {
 	* closed and when/if the user requests it.
 	*/
 	void flush();
+
 }
