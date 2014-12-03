@@ -1,4 +1,6 @@
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 import java.io.*;
@@ -13,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class ContactManagerImpl implements ContactManager {
 	private FileWriter writer;
+	private Calendar todaysDate;
 	/**
 	 * Put the IO stuff in the constructor?
 	 */
@@ -23,6 +26,7 @@ public class ContactManagerImpl implements ContactManager {
 			// FileWriter throws exception so need to catch it
 			e.printStackTrace();
 		}
+		todaysDate = new GregorianCalendar();
 	}
 
 	/**
