@@ -72,8 +72,10 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if there is a meeting with that ID happening in the future
 	*/
 	public PastMeeting getPastMeeting(int id) {
-		// Look through file to see if it exists. 
+		// IF id matches getId() of FutureMeeting, then throw illegal argument exception
+		// ELSE look through pastMeetingList to see if it exists. 
 		// If it exists, then return it.
+		// ELSE return null.
 		return null;
 	}
 
@@ -85,7 +87,10 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if there is a meeting with that ID happening in the past
 	*/
 	public FutureMeeting getFutureMeeting(int id) {
-		// TODO Auto-generated method stub
+		// IF id matches getId() of PastMeeting, throw exception
+		// ELSE look through futureMeetingList to see if it exists.
+		// If it exists then return it.
+		// ELSE return null.
 		return null;
 	}
 
@@ -96,7 +101,9 @@ public class ContactManagerImpl implements ContactManager {
 	* @return the meeting with the requested ID, or null if it there is none.
 	*/
 	public Meeting getMeeting(int id) {
-		// TODO Auto-generated method stub
+		// look through both pastMeetingList and futureMeetingList for meeting id
+		// IF it exists, return Meeting
+		// ELSE return null.
 		return null;
 	}
 
@@ -108,7 +115,7 @@ public class ContactManagerImpl implements ContactManager {
 	* the list will be chronologically sorted and will not contain any
 	* duplicates.
 	*
-	* @param contact one of the user’s contacts
+	* @param contact one of the user's contacts
 	* @return the list of future meeting(s) scheduled with this contact (maybe empty).
 	* @throws IllegalArgumentException if the contact does not exist
 	*/
