@@ -1,6 +1,9 @@
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import java.io.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 //import XML parsers
 
 /**
@@ -10,7 +13,7 @@ import java.util.Set;
 public class ContactManagerImpl implements ContactManager {
 
 	/**
-	 * 
+	 * Put the IO stuff in the constructor?
 	 */
 	public ContactManagerImpl() {
 		// TODO Auto-generated constructor stub
@@ -18,8 +21,9 @@ public class ContactManagerImpl implements ContactManager {
 
 
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-		// TODO Auto-generated method stub
-		return 0;
+		FutureMeeting fm = new FutureMeetingImpl(contacts, date);		
+		//write to file.
+		return fm.getId();
 	}
 
 	public PastMeeting getPastMeeting(int id) {
@@ -62,7 +66,8 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	
 	public void addNewContact(String name, String notes) {
 		// TODO Auto-generated method stub
 
@@ -82,5 +87,4 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 
 	}
-
 }
