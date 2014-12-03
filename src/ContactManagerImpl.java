@@ -18,6 +18,8 @@ public class ContactManagerImpl implements ContactManager {
 	private FileWriter writer;
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
+	//private List<Meeting> pastMeetingList;
+	//private List<Meeting> futureMeetingList;
 	/**
 	 * Put the IO stuff in the constructor?
 	 */
@@ -29,7 +31,7 @@ public class ContactManagerImpl implements ContactManager {
 			e.printStackTrace();
 		}
 		todaysDate = new GregorianCalendar();
-		contactList = new HashSet<Contact>();
+		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
 	}
 
 	/**
