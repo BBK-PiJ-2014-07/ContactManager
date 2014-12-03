@@ -10,6 +10,25 @@ public class ContactImpl implements Contact {
 		this.id = id;
 	}
 	
+	@Override
+	public boolean equals(Object o){
+		Contact c = (ContactImpl) o;
+		if (c == null) {
+			return false;
+		} else if (c.getId() != this.getId()){
+			return false; 
+		} else {
+			if (c.getName() != this.getName()) {
+				return false;
+			} else {
+				if (c.getNotes() != this.getNotes()){
+					return false;
+				} else {
+					return true;
+				}
+			}
+		}
+	}
 
 	public int getId() {
 		return id;
@@ -26,7 +45,7 @@ public class ContactImpl implements Contact {
 
 	public void addNotes(String note) {
 		//concatenate old notes with new notes
-		notes = notes + ", " +  note;
+		this.notes = notes + ", " +  note;
 	}
 
 }
