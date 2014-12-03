@@ -1,6 +1,7 @@
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.io.*;
@@ -16,6 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ContactManagerImpl implements ContactManager {
 	private FileWriter writer;
 	private Calendar todaysDate;
+	private Set<Contact> contactList;
 	/**
 	 * Put the IO stuff in the constructor?
 	 */
@@ -27,6 +29,7 @@ public class ContactManagerImpl implements ContactManager {
 			e.printStackTrace();
 		}
 		todaysDate = new GregorianCalendar();
+		contactList = new HashSet<Contact>();
 	}
 
 	/**
@@ -48,9 +51,14 @@ public class ContactManagerImpl implements ContactManager {
 	* of if any contact is unknown / non-existent
 	*/
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-		//check date of calendar
-		FutureMeeting fm = new FutureMeetingImpl(contacts, date);		
-		//write to file.
+		FutureMeeting fm = null;
+		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {			//check date + contacts
+			throw new IllegalArgumentException();
+		} else {
+			fm = new FutureMeetingImpl(contacts, date);		//Instantiate fm as a FutureMeetingImpl.	
+			//write to file.
+		}
+		
 		return fm.getId();
 	}
 
