@@ -1,5 +1,4 @@
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
@@ -20,9 +19,7 @@ public class ContactManagerImpl implements ContactManager {
 	private Set<Contact> contactList;
 	//private List<Meeting> pastMeetingList;
 	//private List<Meeting> futureMeetingList;
-	/**
-	 * Put the IO stuff in the constructor?
-	 */
+
 	public ContactManagerImpl() {
 		try {
 			this.writer = new FileWriter("contacts.xml");
@@ -32,6 +29,8 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
+		contactList.add(new ContactImpl(1, "Alan", "nice"));	//DEBUG while addNewContact() not yet written
+		contactList.add(new ContactImpl(2, "Sarah", "horrible")); 	//DEBUG while addNewContact() not yet written
 	}
 
 	/**
@@ -54,6 +53,7 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 		FutureMeeting fm = null;
+		System.out.println(contactList.toString());
 		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {			//check date + contacts
 			throw new IllegalArgumentException();
 		} else {
