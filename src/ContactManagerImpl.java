@@ -176,6 +176,9 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null || text == null) {
 			throw new NullPointerException();
 		}
+		if (contacts.isEmpty() || !contactList.containsAll(contacts)){
+			throw new IllegalArgumentException();
+		}
 		PastMeeting pm = new PastMeetingImpl(contacts, date, text);
 		pastMeetingList.add(pm);
 		//write to file
