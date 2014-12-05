@@ -102,10 +102,18 @@ public class ContactManagerImpl implements ContactManager {
 	* @return the meeting with the requested ID, or null if it there is none.
 	*/
 	public Meeting getMeeting(int id) {
-		// look through both pastMeetingList and futureMeetingList for meeting id
-		// IF it exists, return Meeting
-		// ELSE return null.
-		return null;
+		Meeting result = null;
+		for (Meeting fm: futureMeetingList) {
+			if (fm.getId() == id) {
+				result = fm;
+			}
+		}
+		for (PastMeeting pm: pastMeetingList){
+			if (pm.getId()==id){
+				result = pm;
+			}
+		}
+		return result;
 	}
 
 
