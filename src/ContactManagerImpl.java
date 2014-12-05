@@ -29,8 +29,10 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
-		contactList.add(new ContactImpl(1, "Alan", "nice"));	//DEBUG while addNewContact() not yet written
-		contactList.add(new ContactImpl(2, "Sarah", "horrible")); 	//DEBUG while addNewContact() not yet written
+		Contact alan = new ContactImpl(1, "Alan", "nice"); //DEBUG while addNewContact() not yet written
+		Contact sarah = new ContactImpl(2, "Sarah", "horrible"); //DEBUG while addNewContact() not yet written
+		contactList.add(alan);	//DEBUG while addNewContact() not yet written
+		contactList.add(sarah); 	//DEBUG while addNewContact() not yet written
 	}
 
 	/**
@@ -53,14 +55,12 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 		FutureMeeting fm = null;
-		System.out.println(contactList.toString());
 		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {			//check date + contacts
 			throw new IllegalArgumentException();
 		} else {
-			fm = new FutureMeetingImpl(contacts, date);		//Instantiate fm as a FutureMeetingImpl.	
-			//write to file.
+			fm = new FutureMeetingImpl(contacts, date);
+
 		}
-		
 		return fm.getId();
 	}
 
@@ -148,7 +148,7 @@ public class ContactManagerImpl implements ContactManager {
 	* the list will be chronologically sorted and will not contain any
 	2* duplicates.
 	*
-	* @param contact one of the user’s contacts
+	* @param contact one of the userï¿½s contacts
 	* @return the list of future meeting(s) scheduled with this contact (maybe empty).
 	* @throws IllegalArgumentException if the contact does not exist
 	*/
