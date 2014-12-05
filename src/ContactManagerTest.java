@@ -55,6 +55,10 @@ public class ContactManagerTest {
 		Set<Contact> getCont = cm.getContacts(12);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetContactsWithIllegalName(){
+		Set<Contact> getCont = cm.getContacts("Frodo");
+	}
 	@Test
 	public void testAddNewContact(){
 		cm.addNewContact("Buffy", "vampire slayer");
