@@ -209,7 +209,7 @@ public class ContactManagerTest {
 		Calendar myCal = new GregorianCalendar(2015,3,2);
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
-		assertTrue(cm.getFutureMeeting(2).getDate().compareTo(myCal)==0);
+		assertTrue(cm.getMeeting(2).getDate().compareTo(myCal)==0);
 	}
  }
 
