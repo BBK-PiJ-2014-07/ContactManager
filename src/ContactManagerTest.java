@@ -97,5 +97,10 @@ public class ContactManagerTest {
 		assertTrue(!pml.isEmpty());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetPastMeetingListIllegalContact(){
+		Contact nigella = new ContactImpl(99, "Nigella","doesn't exist");
+		List<PastMeeting> pml = cm.getPastMeetingList(nigella);
+	}
 }
 
