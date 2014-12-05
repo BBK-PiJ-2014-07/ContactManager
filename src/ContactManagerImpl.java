@@ -14,6 +14,7 @@ public class ContactManagerImpl implements ContactManager {
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
 	private int newContactId;
+	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
 
@@ -25,6 +26,7 @@ public class ContactManagerImpl implements ContactManager {
 			e.printStackTrace();
 		}
 		newContactId = 1;
+		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>();
 		futureMeetingList = new ArrayList<Meeting>();
 		todaysDate = new GregorianCalendar();
@@ -55,9 +57,10 @@ public class ContactManagerImpl implements ContactManager {
 		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {	//check date + contacts
 			throw new IllegalArgumentException();
 		} else {
-			fm = new FutureMeetingImpl(contacts, date);
+			fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 			futureMeetingList.add(fm);
 			//write to file
+			newMeetingId++;
 		}
 		return fm.getId();
 	}
@@ -203,8 +206,9 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts.isEmpty() || !contactList.containsAll(contacts)){
 			throw new IllegalArgumentException();
 		}
-		PastMeeting pm = new PastMeetingImpl(contacts, date, text);
+		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
+		newMeetingId++;
 		//write to file
 	}
 
