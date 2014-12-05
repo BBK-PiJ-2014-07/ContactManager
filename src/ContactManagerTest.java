@@ -43,6 +43,17 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that addFutureMeeting() throws IllegalArgumentException
+	 * if contacts don't exist
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddFutureMeetingIllegalContacts(){
+		Set<Contact> badCont = new HashSet<Contact>();
+		badCont.add(new ContactImpl(55, "Mary", "made up"));
+		cm.addFutureMeeting(badCont, new GregorianCalendar(2013,2,24));
+	}
+
+	/**
 	 * Test that getContacts(String) works
 	 */
 	@Test
