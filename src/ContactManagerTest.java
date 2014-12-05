@@ -18,16 +18,11 @@ public class ContactManagerTest {
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");
 		contacts.add(alan);
-		//contacts.add(new ContactImpl(2, "Sarah", "horrible"));
+		contacts.add(new ContactImpl(2, "Sarah", "horrible"));
 		fm = new FutureMeetingImpl(contacts, new GregorianCalendar(2015,1,12));
 		
 	}
-	/**
-	 * While the IO hasn't been written for ContactManagerImpl, this test is failing.
-	 * this method throws an IllegalArgumentException which technically it should, 
-	 * because it is checking the set of contacts I'm passing in against an empty set
-	 * of contacts. This test should pass if I instantiate contactList in ContactManagerImpl with the contacts above.
-	 */
+
 	@Test
 	public void testAddFutureMeeting(){
 		int newFutureMeetingId = cm.addFutureMeeting(contacts, new GregorianCalendar(2015,1,12));	//13 feb 2015
@@ -38,5 +33,17 @@ public class ContactManagerTest {
 	public void testGetContactsWithString(){
 		Set<Contact> getCont = cm.getContacts("Alan");
 		assertTrue(getCont.contains(alan));
+	}
+
+	@Test
+	public void testGetContactsWithSingleId(){
+		Set<Contact> getCont = cm.getContacts(1);
+		assertTrue(getCont.contains(alan));
+	}
+
+	@Test
+	public void testGetContactsWithMultipleIds(){
+		Set<Contact> getCont = cm.getContacts(1,2);
+		assertTrue(getCont.containsAll(contacts));
 	}
 }
