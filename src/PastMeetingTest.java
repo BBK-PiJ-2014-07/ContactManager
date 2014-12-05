@@ -13,8 +13,8 @@ public class PastMeetingTest {
 
 	@Before
 	public void buildUp(){
-		Contact alan = new ContactImpl(1, "Alan");
-		Contact sarah = new ContactImpl(2, "Sarah");
+		Contact alan = new ContactImpl(1, "Alan", "Likes cheese");
+		Contact sarah = new ContactImpl(2, "Sarah", "Hates cheese");
 		contactSet = new HashSet<Contact>();
 		contactSet.add(alan);
 		contactSet.add(sarah);
