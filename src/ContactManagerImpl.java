@@ -14,7 +14,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
  *
  */
 public class ContactManagerImpl implements ContactManager {
-	public static final NullPointerException NULL_POINTER_EXCEPTION = new NullPointerException();
 	private FileWriter writer;
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
@@ -243,7 +242,7 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public Set<Contact> getContacts(String name) {
 		if (name == null) {
-			throw NULL_POINTER_EXCEPTION;
+			throw new NullPointerException();
 		}
 		Set<Contact> result = new HashSet<Contact>();
 		for (Contact c: contactList){
