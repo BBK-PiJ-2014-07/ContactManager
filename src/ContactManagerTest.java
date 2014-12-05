@@ -74,4 +74,9 @@ public class ContactManagerTest {
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,4,5), "board meeting");
 		assertFalse(cm.getPastMeetingList().isEmpty());
 	}
+
+	@Test(expected= NullPointerException.class)
+	public void testNewPastMeetingNullArg(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,6), null);
+	}
 }
