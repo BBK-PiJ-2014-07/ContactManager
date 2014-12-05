@@ -165,9 +165,9 @@ public class ContactManagerImpl implements ContactManager {
 	 * Debugging method for testing, will be removed once all interface methods implemented.
 	 * @return the internal List of pastMeetings
 	 */
-	public List<PastMeeting> getPastMeetingList() {
-		return pastMeetingList;
-	}
+	//public List<PastMeeting> getPastMeetingList() {
+	//	return pastMeetingList;
+	//}
 	/**
 	* Create a new record for a meeting that took place in the past.
 	*
