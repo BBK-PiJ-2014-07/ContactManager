@@ -22,7 +22,9 @@ public class ContactImpl implements Contact {
 			//DEBUG - System.out.println("Object is null");
 			return false;
 		}
-		Contact otherContact = (ContactImpl) obj;
+		//Cast other object to type Contact
+		Contact otherContact = (Contact) obj;
+
 		if (otherContact.getId() != this.id){
 			// DEBUG System.out.println("ID mismatch");
 			return false;
@@ -41,7 +43,10 @@ public class ContactImpl implements Contact {
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		int hash = 6;
+		hash =  7 * hash + this.name.hashCode();
+		hash = 7 * hash + this.notes.hashCode();
+		return hash;
 	}
 
 	public int getId() {
