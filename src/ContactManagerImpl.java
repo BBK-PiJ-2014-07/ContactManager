@@ -149,8 +149,13 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if the contact does not exist
 	*/
 	public List<PastMeeting> getPastMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PastMeeting> result = new ArrayList<PastMeeting>();
+		for (PastMeeting pm: pastMeetingList) {
+			if (pm.getContacts().contains(contact)){
+				result.add(pm);
+			}
+		}
+		return result;
 	}
 
 	/**
