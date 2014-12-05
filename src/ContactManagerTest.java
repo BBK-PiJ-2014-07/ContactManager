@@ -46,4 +46,11 @@ public class ContactManagerTest {
 		Set<Contact> getCont = cm.getContacts(1,2);
 		assertTrue(getCont.containsAll(contacts));
 	}
+
+	@Test
+	public void testAddNewContact(){
+		cm.addNewContact("Buffy", "vampire slayer");
+		Set<Contact> getCont = cm.getContacts("Buffy");
+		assertFalse(getCont.isEmpty());
+	}
 }
