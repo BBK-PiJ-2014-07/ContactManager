@@ -18,8 +18,8 @@ public class ContactManagerImpl implements ContactManager {
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
 	private int newContactId;
-	//private List<Meeting> pastMeetingList;
-	//private List<Meeting> futureMeetingList;
+	private List<PastMeeting> pastMeetingList;
+	//private List<FutureMeeting> futureMeetingList;
 
 	public ContactManagerImpl() {
 		try {
@@ -157,6 +157,14 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	/**
+	 * Debugging method for testing, will be removed once all interface methods implemented.
+	 * @return the internal List of pastMeetings
+	 */
+
+	public List<PastMeeting> getPastMeetingList() {
+		return pastMeetingList;
+	}
+	/**
 	* Create a new record for a meeting that took place in the past.
 	*
 	* @param contacts a list of participants
@@ -166,11 +174,13 @@ public class ContactManagerImpl implements ContactManager {
 	* empty, or any of the contacts does not exist
 	* @throws NullPointerException if any of the arguments is null
 	*/
+
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
 			String text) {
 		// TODO Auto-generated method stub
 
 	}
+
 
 	/**
 	* Add notes to a meeting.
