@@ -54,11 +54,13 @@ public class ContactManagerTest {
 	public void testGetContactsWithIllegalId(){
 		Set<Contact> getCont = cm.getContacts(12);
 	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetContactsWithIllegalName(){
-		Set<Contact> getCont = cm.getContacts("Frodo");
+/*
+	Commented out, as ambiguous reference
+	@Test(expected = NullPointerException.class)
+	public void testGetContactsWithNullArg(){
+		Set<Contact> getCont = cm.getContacts(null);
 	}
+	*/
 	@Test
 	public void testAddNewContact(){
 		cm.addNewContact("Buffy", "vampire slayer");
