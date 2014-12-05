@@ -34,6 +34,15 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that addFutureMeeting() throws IllegalArgumentException
+	 * if date is in the past
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddFutureMeetingPastDate(){
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2013,2,24));
+	}
+
+	/**
 	 * Test that getContacts(String) works
 	 */
 	@Test
