@@ -11,6 +11,7 @@ public class ContactManagerTest {
 	private Set<Contact> contacts;
 	private FutureMeeting fm;
 	private Contact alan;
+	private Contact sarah;
 	
 	@Before
 	public void buildUp(){
@@ -18,9 +19,11 @@ public class ContactManagerTest {
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");
 		contacts.add(alan);
-		contacts.add(new ContactImpl(2, "Sarah", "horrible"));
+		sarah = new ContactImpl(2, "Sarah", "horrible");
+		contacts.add(sarah);
 		fm = new FutureMeetingImpl(contacts, new GregorianCalendar(2015,1,12));
-		
+		cm.addNewContact("Alan", "nice");
+		cm.addNewContact("Sarah", "horrible");
 	}
 
 	@Test

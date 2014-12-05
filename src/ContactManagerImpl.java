@@ -31,10 +31,7 @@ public class ContactManagerImpl implements ContactManager {
 		newContactId = 1;
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
-		Contact alan = new ContactImpl(1, "Alan", "nice"); //DEBUG while addNewContact() not yet written
-		Contact sarah = new ContactImpl(2, "Sarah", "horrible"); //DEBUG while addNewContact() not yet written
-		contactList.add(alan);	//DEBUG while addNewContact() not yet written
-		contactList.add(sarah); 	//DEBUG while addNewContact() not yet written
+
 	}
 
 	/**
