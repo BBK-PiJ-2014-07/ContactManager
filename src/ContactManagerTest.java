@@ -79,4 +79,11 @@ public class ContactManagerTest {
 	public void testNewPastMeetingNullArg(){
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,6), null);
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNewPastMeetingIllegalContacts(){
+		Set<Contact> badCont = new HashSet<Contact>();
+		badCont.add(new ContactImpl(55, "Mary", "made up"));
+		cm.addNewPastMeeting(badCont, new GregorianCalendar(2013,4,2), "this should break");
+	}
 }
