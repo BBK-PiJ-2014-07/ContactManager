@@ -212,8 +212,15 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if any of the IDs does not correspond to a real contact
 	*/
 	public Set<Contact> getContacts(int... ids) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Contact> result = new HashSet<Contact>();
+		for (int thisId: ids) {
+			for (Contact c : contactList) {
+				if (c.getId() == thisId) {
+					result.add(c);
+				}
+			}
+		}
+		return result;
 	}
 
 	
