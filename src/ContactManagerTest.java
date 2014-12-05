@@ -161,13 +161,24 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that getPastMeetingList throws IlegalArgumentException
+	 * Test that getPastMeetingList throws IllegalArgumentException
 	 * if contact passed as argument is nonexistent
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetPastMeetingListIllegalContact(){
 		Contact nigella = new ContactImpl(99, "Nigella","doesn't exist");
 		List<PastMeeting> pml = cm.getPastMeetingList(nigella);
+	}
+
+	/**
+	 * Test that getFutureMeetingList(Calendar date) works as expected
+	 */
+	@Test
+	public void testGetFutureMeetingListDate(){
+		Calendar myCal = new GregorianCalendar(2016,3,4);
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
+		List<Meeting> fml = cm.getFutureMeetingList(myCal);
+		assertTrue(fml.get(0).getDate().equals(myCal));
 	}
 }
 
