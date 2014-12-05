@@ -118,8 +118,16 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if the contact does not exist
 	*/
 	public List<Meeting> getFutureMeetingList(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!contactList.contains(contact)){
+			throw new IllegalArgumentException();
+		}
+		List<Meeting> result = new ArrayList<Meeting>();
+		for (Meeting fm: futureMeetingList){
+			if (fm.getContacts().contains(contact)){
+				result.add(fm);
+			}
+		}
+		return result;
 	}
 	
 	/**
