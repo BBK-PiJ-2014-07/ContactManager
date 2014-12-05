@@ -178,7 +178,8 @@ public class ContactManagerTest {
 		Calendar myCal = new GregorianCalendar(2016,3,4);
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
 		List<Meeting> fml = cm.getFutureMeetingList(myCal);
-		assertTrue(fml.get(0).getDate().equals(myCal));
+		System.out.println(fml.toString());
+		assertTrue(fml.get(0).getDate().compareTo(myCal)==0);
 	}
 }
 
