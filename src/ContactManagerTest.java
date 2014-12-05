@@ -5,9 +5,10 @@ import static org.junit.Assert.*;
 import java.util.GregorianCalendar;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 public class ContactManagerTest {
-	private ContactManager cm;
+	private ContactManagerImpl cm; 		//not using interface as impl has more methods
 	private Set<Contact> contacts;
 	private FutureMeeting fm;
 	private Contact alan;
@@ -66,5 +67,11 @@ public class ContactManagerTest {
 		cm.addNewContact("Buffy", "vampire slayer");
 		Set<Contact> getCont = cm.getContacts("Buffy");
 		assertFalse(getCont.isEmpty());
+	}
+
+	@Test
+	public void testNewPastMeeting() {
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,4,5), "board meeting");
+		assertFalse(cm.getPastMeetingList().isEmpty());
 	}
 }
