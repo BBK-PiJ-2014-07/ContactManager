@@ -11,23 +11,37 @@ public class ContactImpl implements Contact {
 	}
 	
 	@Override
-	public boolean equals(Object o){
-		Contact c = (ContactImpl) o;
-		if (c == null) {
+	public boolean equals(Object obj){
+		if (obj.getClass() != this.getClass()) {
 			return false;
-		} else if (c.getId() != this.getId()){
-			return false; 
-		} else {
-			if (c.getName() != this.getName()) {
-				return false;
-			} else {
-				if (c.getNotes() != this.getNotes()){
-					return false;
-				} else {
-					return true;
-				}
-			}
 		}
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			//DEBUG - System.out.println("Object is null");
+			return false;
+		}
+		Contact otherContact = (ContactImpl) obj;
+		if (otherContact.getId() != this.id){
+			// DEBUG System.out.println("ID mismatch");
+			return false;
+		}
+		if (!this.name.equals(otherContact.getName())) {
+			// DEBUG System.out.println("Name mismatch");
+				return false;
+		}
+		if (!this.notes.equals(otherContact.getNotes())){
+			//DEBUG System.out.println("Notes mismatch");
+			return false;
+		}
+		return true;
+				
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	public int getId() {
