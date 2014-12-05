@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  *
  */
 public class ContactManagerImpl implements ContactManager {
+	public static final NullPointerException NULL_POINTER_EXCEPTION = new NullPointerException();
 	private FileWriter writer;
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
@@ -54,7 +55,7 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 		FutureMeeting fm = null;
-		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {			//check date + contacts
+		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {	//check date + contacts
 			throw new IllegalArgumentException();
 		} else {
 			fm = new FutureMeetingImpl(contacts, date);
@@ -199,6 +200,9 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the name or the notes are null
 	*/
 	public void addNewContact(String name, String notes) {
+		if (name == null || notes == null){
+			throw new NullPointerException();		//check that neither notes or name is null
+		}
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
 		//write new contact to file
@@ -215,10 +219,15 @@ public class ContactManagerImpl implements ContactManager {
 	public Set<Contact> getContacts(int... ids) {
 		Set<Contact> result = new HashSet<Contact>();
 		for (int thisId: ids) {
+			int contactsFound=0;	//flag to indicate whether matching contacts have been found
 			for (Contact c : contactList) {
 				if (c.getId() == thisId) {
 					result.add(c);
+					contactsFound++;
 				}
+			}
+			if (contactsFound==0){
+				throw new IllegalArgumentException(); 	//if no contacts with that ID are found
 			}
 		}
 		return result;
@@ -233,6 +242,9 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the parameter is null
 	*/
 	public Set<Contact> getContacts(String name) {
+		if (name == null) {
+			throw NULL_POINTER_EXCEPTION;
+		}
 		Set<Contact> result = new HashSet<Contact>();
 		for (Contact c: contactList){
 			if (c.getName().equals(name)){
