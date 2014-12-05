@@ -10,13 +10,15 @@ public class ContactManagerTest {
 	private ContactManager cm;
 	private Set<Contact> contacts;
 	private FutureMeeting fm;
+	private Contact alan;
 	
 	@Before
 	public void buildUp(){
 		cm = new ContactManagerImpl();
 		contacts = new HashSet<Contact>();
-		contacts.add(new ContactImpl(1, "Alan", "nice"));
-		contacts.add(new ContactImpl(2, "Sarah", "horrible"));
+		alan = new ContactImpl(1, "Alan", "nice");
+		contacts.add(alan);
+		//contacts.add(new ContactImpl(2, "Sarah", "horrible"));
 		fm = new FutureMeetingImpl(contacts, new GregorianCalendar(2015,1,12));
 		
 	}
@@ -30,5 +32,11 @@ public class ContactManagerTest {
 	public void testAddFutureMeeting(){
 		int newFutureMeetingId = cm.addFutureMeeting(contacts, new GregorianCalendar(2015,1,12));	//13 feb 2015
 		assertEquals(fm.getId(), newFutureMeetingId);
+	}
+
+	@Test
+	public void testGetContactsWithString(){
+		Set<Contact> getCont = cm.getContacts("Alan");
+		assertTrue(getCont.contains(alan));
 	}
 }
