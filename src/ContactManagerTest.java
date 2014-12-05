@@ -192,5 +192,15 @@ public class ContactManagerTest {
 		assertTrue(fml.get(0).getContacts().equals(contacts));
 	}
 
+	/**
+	 * Test that getFutureMeetingList(Contact contact) throws IllegalArgumentException
+	 * if contact does not exist
+	 *
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetFutureMeetingListIllegalContact(){
+		Contact nigella = new ContactImpl(99, "Nigella","doesn't exist");
+		List<Meeting> fml = cm.getFutureMeetingList(alan);
+	}
  }
 
