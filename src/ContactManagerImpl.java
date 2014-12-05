@@ -225,8 +225,13 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the parameter is null
 	*/
 	public Set<Contact> getContacts(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Contact> result = new HashSet<Contact>();
+		for (Contact c: contactList){
+			if (c.getName().equals(name)){
+				result.add(c);
+			}
+		}
+		return result;
 	}
 	
 	/**
