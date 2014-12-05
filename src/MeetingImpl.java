@@ -6,11 +6,11 @@ public class MeetingImpl implements Meeting{
 	private int id;
 	private Set<Contact> contactList;
 	
-	public MeetingImpl(Set<Contact> contacts, Calendar date){
+	public MeetingImpl(int id, Set<Contact> contacts, Calendar date){
 		this.meetingDate = date;
 		this.contactList = contacts;
 		//need to change this
-		this.id = 1;
+		this.id = id;
 	}
 	
 	public int getId() {
