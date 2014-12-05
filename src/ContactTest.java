@@ -10,7 +10,11 @@ public class ContactTest {
 		person = new ContactImpl (1, "Alan", "Likes cheese");
 		//open the file, create details
 	}
-	
+	@Test
+	public void testEquals(){
+		Contact person2 = new ContactImpl(1, "Alan", "Likes cheese");
+		assertTrue(person.equals(person2));
+	}
 	@Test
 	public void testGetId(){
 		//test ID getter
@@ -30,7 +34,7 @@ public class ContactTest {
 	@Test
 	public void testAddNotes(){
 		person.addNotes("Speaks French");
-		System.out.println(person.getNotes());
+		//System.out.println(person.getNotes());
 		assertEquals(person.getNotes(), "Likes cheese, Speaks French");
 	}
 	
