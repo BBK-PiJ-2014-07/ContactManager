@@ -19,7 +19,7 @@ public class MeetingTest {
 		contactSet.add(alan);
 		contactSet.add(sarah);
 		Calendar cal = new GregorianCalendar(2011,11,01);
-		meet = new MeetingImpl(contactSet, cal);
+		meet = new MeetingImpl(1234, contactSet, cal);
 	}
 	
 	@Test

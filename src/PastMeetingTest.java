@@ -19,12 +19,12 @@ public class PastMeetingTest {
 		contactSet.add(alan);
 		contactSet.add(sarah);
 		Calendar cal = new GregorianCalendar(2011,11,01);
-		pm = new PastMeetingImpl(contactSet, cal, "Meeting notes");
+		pm = new PastMeetingImpl(1234, contactSet, cal, "Meeting notes");
 	}
 	
 	@Test
 	public void testGetId(){
-		assertEquals(pm.getId(), 1);
+		assertEquals(pm.getId(), 1234);
 	}
 	
 	@SuppressWarnings("static-access")

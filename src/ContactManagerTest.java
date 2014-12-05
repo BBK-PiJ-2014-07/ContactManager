@@ -19,7 +19,6 @@ public class ContactManagerTest {
 		contacts.add(alan);
 		sarah = new ContactImpl(2, "Sarah", "horrible");
 		contacts.add(sarah);
-		fm = new FutureMeetingImpl(contacts, new GregorianCalendar(2015,1,12));
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
 	}
@@ -30,7 +29,7 @@ public class ContactManagerTest {
 	@Test
 	public void testAddFutureMeeting(){
 		int newFutureMeetingId = cm.addFutureMeeting(contacts, new GregorianCalendar(2015,1,12));	//13 feb 2015
-		assertEquals(fm.getId(), newFutureMeetingId);
+		assertTrue(newFutureMeetingId == 1);
 	}
 
 	/**
@@ -201,6 +200,16 @@ public class ContactManagerTest {
 	public void testGetFutureMeetingListIllegalContact(){
 		Contact nigella = new ContactImpl(99, "Nigella","doesn't exist");
 		List<Meeting> fml = cm.getFutureMeetingList(nigella);
+	}
+	/**
+	 * Test getMeeting works as expected
+	 */
+	@Test
+	public void testGetMeeting(){
+		Calendar myCal = new GregorianCalendar(2015,3,2);
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		assertTrue(cm.getFutureMeeting(2).getDate().compareTo(myCal)==0);
 	}
  }
 
