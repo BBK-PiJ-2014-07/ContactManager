@@ -200,7 +200,7 @@ public class ContactManagerTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetFutureMeetingListIllegalContact(){
 		Contact nigella = new ContactImpl(99, "Nigella","doesn't exist");
-		List<Meeting> fml = cm.getFutureMeetingList(alan);
+		List<Meeting> fml = cm.getFutureMeetingList(nigella);
 	}
  }
 
