@@ -140,6 +140,7 @@ public class ContactManagerImpl implements ContactManager {
 				result.add(fm);
 			}
 		}
+
 		return result;
 	}
 
