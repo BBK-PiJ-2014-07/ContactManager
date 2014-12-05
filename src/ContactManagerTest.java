@@ -106,7 +106,7 @@ public class ContactManagerTest {
 	@Test
 	public void testNewPastMeeting() {
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,4,5), "board meeting");
-		assertFalse(cm.getPastMeetingList().isEmpty());
+		assertFalse(cm.getPastMeetingList(alan).isEmpty());
 	}
 
 	/**
