@@ -149,6 +149,9 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if the contact does not exist
 	*/
 	public List<PastMeeting> getPastMeetingList(Contact contact) {
+		if (!contactList.contains(contact)){
+			throw new IllegalArgumentException();
+		}
 		List<PastMeeting> result = new ArrayList<PastMeeting>();
 		for (PastMeeting pm: pastMeetingList) {
 			if (pm.getContacts().contains(contact)){
