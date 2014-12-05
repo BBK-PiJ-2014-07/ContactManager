@@ -2,10 +2,7 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class ContactManagerTest {
 	private ContactManagerImpl cm; 		//not using interface as impl has more methods
@@ -93,6 +90,12 @@ public class ContactManagerTest {
 		cm.addNewPastMeeting(emptyCont, new GregorianCalendar(2014,02,2), "this should also break");
 	}
 
+	@Test
+	public void testGetPastMeetingList(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,12,12), "test notes");
+		List<PastMeeting> pml = cm.getPastMeetingList(alan);
+		assertTrue(!pml.isEmpty());
+	}
 
 }
 
