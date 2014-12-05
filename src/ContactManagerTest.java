@@ -50,6 +50,11 @@ public class ContactManagerTest {
 		assertTrue(getCont.containsAll(contacts));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetContactsWithIllegalId(){
+		Set<Contact> getCont = cm.getContacts(12);
+	}
+
 	@Test
 	public void testAddNewContact(){
 		cm.addNewContact("Buffy", "vampire slayer");
