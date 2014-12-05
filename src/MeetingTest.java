@@ -8,35 +8,35 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class MeetingTest {
-	private Meeting pm;
+	private Meeting meet;
 	private Set<Contact> contactSet;
 
 	@Before
 	public void buildUp(){
-		Contact alan = new ContactImpl(1, "Alan");
-		Contact sarah = new ContactImpl(2, "Sarah");
+		Contact alan = new ContactImpl(1, "Alan", "Likes cheese");
+		Contact sarah = new ContactImpl(2, "Sarah", "Lives in London");
 		contactSet = new HashSet<Contact>();
 		contactSet.add(alan);
 		contactSet.add(sarah);
 		Calendar cal = new GregorianCalendar(2011,11,01);
-		pm = new MeetingImpl(contactSet, cal);
+		meet = new MeetingImpl(contactSet, cal);
 	}
 	
 	@Test
 	public void testGetId(){
-		assertEquals(pm.getId(), 1);
+		assertEquals(meet.getId(), 1);
 	}
 	
 	@SuppressWarnings("static-access")
 	@Test
 	public void testGetDate(){
-		Calendar newCal = pm.getDate();
+		Calendar newCal = meet.getDate();
 		assertEquals(newCal.get(newCal.YEAR),2011);
 	}
 
 	@Test
 	public void testGetContacts(){
-		Set<Contact> newSet = pm.getContacts();
+		Set<Contact> newSet = meet.getContacts();
 		assertTrue(newSet.containsAll(contactSet));
 	}
 }
