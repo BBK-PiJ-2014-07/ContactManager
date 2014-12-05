@@ -157,7 +157,6 @@ public class ContactManagerImpl implements ContactManager {
 	 * Debugging method for testing, will be removed once all interface methods implemented.
 	 * @return the internal List of pastMeetings
 	 */
-
 	public List<PastMeeting> getPastMeetingList() {
 		return pastMeetingList;
 	}
@@ -174,6 +173,9 @@ public class ContactManagerImpl implements ContactManager {
 
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
 			String text) {
+		if (contacts == null || date == null || text == null) {
+			throw new NullPointerException();
+		}
 		PastMeeting pm = new PastMeetingImpl(contacts, date, text);
 		pastMeetingList.add(pm);
 		//write to file
