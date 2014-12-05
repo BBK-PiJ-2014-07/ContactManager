@@ -202,14 +202,24 @@ public class ContactManagerTest {
 		List<Meeting> fml = cm.getFutureMeetingList(nigella);
 	}
 	/**
-	 * Test getMeeting works as expected
+	 * Test getMeeting works as expected with a Future meeting
 	 */
 	@Test
-	public void testGetMeeting(){
+	public void testGetMeetingWithFutureMeeting(){
 		Calendar myCal = new GregorianCalendar(2015,3,2);
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
 		assertTrue(cm.getMeeting(2).getDate().compareTo(myCal)==0);
+	}
+
+	@Test
+	public void testGetMeetingWithPastMeeting(){
+		Calendar myCal = new GregorianCalendar(2012,4,2);
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,5,5));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,4,5));
+		assertTrue(cm.getMeeting(3).getDate().compareTo(myCal)==0);
 	}
  }
 
