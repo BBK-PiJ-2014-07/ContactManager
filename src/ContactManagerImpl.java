@@ -17,6 +17,7 @@ public class ContactManagerImpl implements ContactManager {
 	private FileWriter writer;
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
+	private int newContactId;
 	//private List<Meeting> pastMeetingList;
 	//private List<Meeting> futureMeetingList;
 
@@ -27,6 +28,7 @@ public class ContactManagerImpl implements ContactManager {
 			// FileWriter throws exception so need to catch it
 			e.printStackTrace();
 		}
+		newContactId = 1;
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
 		Contact alan = new ContactImpl(1, "Alan", "nice"); //DEBUG while addNewContact() not yet written
@@ -200,8 +202,10 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the name or the notes are null
 	*/
 	public void addNewContact(String name, String notes) {
-		// TODO Auto-generated method stub
-
+		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
+		contactList.add(newContact); //add it to the internal contact list
+		//write new contact to file
+		newContactId++; //increment newContactId for next contact
 	}
 
 	/**
