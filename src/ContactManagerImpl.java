@@ -1,8 +1,4 @@
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.io.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -29,6 +25,7 @@ public class ContactManagerImpl implements ContactManager {
 			e.printStackTrace();
 		}
 		newContactId = 1;
+		pastMeetingList = new ArrayList<PastMeeting>();
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
 
@@ -177,8 +174,9 @@ public class ContactManagerImpl implements ContactManager {
 
 	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
 			String text) {
-		// TODO Auto-generated method stub
-
+		PastMeeting pm = new PastMeetingImpl(contacts, date, text);
+		pastMeetingList.add(pm);
+		//write to file
 	}
 
 
