@@ -15,7 +15,7 @@ public class ContactManagerImpl implements ContactManager {
 	private Set<Contact> contactList;
 	private int newContactId;
 	private List<PastMeeting> pastMeetingList;
-	//private List<FutureMeeting> futureMeetingList;
+	private List<Meeting> futureMeetingList;
 
 	public ContactManagerImpl() {
 		try {
@@ -26,6 +26,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		newContactId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>();
+		futureMeetingList = new ArrayList<Meeting>();
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
 
@@ -55,7 +56,8 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException();
 		} else {
 			fm = new FutureMeetingImpl(contacts, date);
-
+			futureMeetingList.add(fm);
+			//write to file
 		}
 		return fm.getId();
 	}
@@ -132,8 +134,13 @@ public class ContactManagerImpl implements ContactManager {
 	* @return the list of meetings
 	*/
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Meeting> result = new ArrayList<Meeting>();
+		for (Meeting fm : futureMeetingList){
+			if (fm.getDate().compareTo(date)==0){
+				result.add(fm);
+			}
+		}
+		return result;
 	}
 
 
