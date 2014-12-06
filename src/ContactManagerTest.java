@@ -211,6 +211,9 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
 		assertTrue(cm.getMeeting(2).getDate().compareTo(myCal)==0);
 	}
+	/**
+	 * Test getMeeting works as expected with a past meeting
+	 */
 
 	@Test
 	public void testGetMeetingWithPastMeeting(){
@@ -220,6 +223,19 @@ public class ContactManagerTest {
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012,4,2), "test");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,4,5));
 		assertTrue(cm.getMeeting(3).getDate().compareTo(myCal)==0);
+	}
+
+	/**
+	 * Test that getFutureMeeting correctly returns a FutureMeeting
+	 */
+	@Test
+	public void testGetFutureMeetingInt(){
+		Calendar myCal = new GregorianCalendar(2015,5,5);
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 4, 5));
+		assertTrue(cm.getFutureMeeting(2).getDate().compareTo(myCal)==0);
 	}
  }
 
