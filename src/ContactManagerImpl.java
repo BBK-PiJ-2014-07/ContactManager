@@ -1,9 +1,21 @@
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.io.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-//import XML parsers
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Implementation of ContactManager
@@ -11,6 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class ContactManagerImpl implements ContactManager {
 	private FileWriter writer;
+	private FileReader reader;
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
 	private int newContactId;
@@ -21,25 +34,31 @@ public class ContactManagerImpl implements ContactManager {
 	public ContactManagerImpl() {
 		try {
 			this.writer = new FileWriter("contacts.xml");
+			this.reader = new FileReader("contacts.xml");
 		} catch (IOException e) {
 			// FileWriter throws exception so need to catch it
 			e.printStackTrace();
 		}
-		newContactId = 1;
+		newContactId = 1; //find the highest ID in contacts.xml and instantiate it to that
 		newMeetingId = 1;
-		pastMeetingList = new ArrayList<PastMeeting>();
-		futureMeetingList = new ArrayList<Meeting>();
+		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.xml
+		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.xml
 		todaysDate = new GregorianCalendar();
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
 
 	}
-
+	/**
+	 * The method that reads from the file. It needs to check whether the file exists, and if not, return
+	 * an error.
+	 * @Param str - the string to be written.
+	 */
 	/**
 	 * The method that writes to the file. It needs to check whether the file exists, and if so, append
-	 * rather than overwrite. 
+	 * rather than overwrite.
+	 * It is private as it should not be accessed outside of this class.
 	 * @param str - the string to be written
 	 */
-	public void writeToFile(String str){
+	private void writeToFile(String str){
 		//TODO
 	}
 	
@@ -130,7 +149,6 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
-
 	/**
 	* Returns the list of future meetings scheduled with this contact.
 	*
@@ -202,13 +220,6 @@ public class ContactManagerImpl implements ContactManager {
 		return result;
 	}
 
-	/**
-	 * Debugging method for testing, will be removed once all interface methods implemented.
-	 * @return the internal List of pastMeetings
-	 */
-	//public List<PastMeeting> getPastMeetingList() {
-	//	return pastMeetingList;
-	//}
 	/**
 	* Create a new record for a meeting that took place in the past.
 	*
