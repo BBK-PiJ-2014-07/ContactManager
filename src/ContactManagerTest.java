@@ -243,11 +243,22 @@ public class ContactManagerTest {
 	 * the ID of a past meeting
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetFutureMeetingWithPastMeeting(){
+	public void testGetFutureMeetingIntWithPastMeeting(){
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "test");
 		cm.getFutureMeeting(3);
+	}
+
+	/**
+	 * Test that getFutureMeeting(int) returns null if meeting id does not exist
+	 */
+	@Test
+	public void testGetFutureMeetingIntReturnsNull(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "test");
+		assertNull(cm.getFutureMeeting(6));
 	}
  }
 
