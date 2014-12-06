@@ -220,7 +220,7 @@ public class ContactManagerTest {
 		Calendar myCal = new GregorianCalendar(2012,4,2);
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,5,5));
-		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012,4,2), "test");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012,4,2), "third meeting");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,4,5));
 		assertTrue(cm.getMeeting(3).getDate().compareTo(myCal)==0);
 	}
@@ -229,7 +229,7 @@ public class ContactManagerTest {
 	 * Test that getFutureMeeting correctly returns a FutureMeeting
 	 */
 	@Test
-	public void testGetFutureMeetingInt(){
+	public void testGetFutureMeeting(){
 		Calendar myCal = new GregorianCalendar(2015,5,5);
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
@@ -243,7 +243,7 @@ public class ContactManagerTest {
 	 * the ID of a past meeting
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetFutureMeetingIntWithPastMeeting(){
+	public void testGetFutureMeetingWithPastMeeting(){
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "test");
@@ -254,11 +254,43 @@ public class ContactManagerTest {
 	 * Test that getFutureMeeting(int) returns null if meeting id does not exist
 	 */
 	@Test
-	public void testGetFutureMeetingIntReturnsNull(){
+	public void testGetFutureMeetingReturnsNull(){
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "test");
 		assertNull(cm.getFutureMeeting(6));
 	}
- }
+
+	/**
+	 * Test that getPastMeeting(int id) correctly returns a past meeting
+	 */
+	@Test
+	public void testGetPastMeeting(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "correct meeting");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 4, 5));
+		assertEquals(cm.getPastMeeting(3).getNotes(), "correct meeting");
+	}
+
+	/**
+	 * Test that getPastMeeting throws an IllegalArgumentException if passed the ID of a future meeting
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetPastMeetingWithFutureMeeting(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
+		cm.getPastMeeting(2);
+	}
+
+	/**
+	 * Test that getPastMeeting returns null if ID doesn't exist
+	 */
+	@Test
+	public void testGetPastMeetingReturnsNull(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
+		assertNull(cm.getPastMeeting(88));
+	}
+}
 
