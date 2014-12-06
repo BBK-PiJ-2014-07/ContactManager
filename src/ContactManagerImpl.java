@@ -73,11 +73,18 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws IllegalArgumentException if there is a meeting with that ID happening in the future
 	*/
 	public PastMeeting getPastMeeting(int id) {
-		// IF id matches getId() of FutureMeeting, then throw illegal argument exception
-		// ELSE look through pastMeetingList to see if it exists. 
-		// If it exists, then return it.
-		// ELSE return null.
-		return null;
+		PastMeeting result = null;
+		for (Meeting fm: futureMeetingList){
+			if (fm.getId() == id) {
+				throw new IllegalArgumentException();
+			}
+		}
+		for (PastMeeting pm: pastMeetingList){
+			if (pm.getId() == id){
+				result = pm;
+			}
+		}
+		return result;
 	}
 
 	/**
