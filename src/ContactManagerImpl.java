@@ -6,17 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.io.*;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 /**
  * Implementation of ContactManager
  *
@@ -33,18 +22,18 @@ public class ContactManagerImpl implements ContactManager {
 
 	public ContactManagerImpl() {
 		try {
-			this.writer = new FileWriter("contacts.xml");
-			this.reader = new FileReader("contacts.xml");
+			this.writer = new FileWriter("contacts.txt");
+			this.reader = new FileReader("contacts.txt");
 		} catch (IOException e) {
 			// FileWriter throws exception so need to catch it
 			e.printStackTrace();
 		}
-		newContactId = 1; //find the highest ID in contacts.xml and instantiate it to that
+		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
-		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.xml
-		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.xml
+		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
+		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
 		todaysDate = new GregorianCalendar();
-		contactList = new HashSet<Contact>(); //need to populate this from contacts.xml
+		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
 
 	}
 	/**
@@ -52,14 +41,17 @@ public class ContactManagerImpl implements ContactManager {
 	 * an error.
 	 * @Param str - the string to be written.
 	 */
+	private boolean readFile(String str){
+		return false;
+	}
 	/**
 	 * The method that writes to the file. It needs to check whether the file exists, and if so, append
 	 * rather than overwrite.
 	 * It is private as it should not be accessed outside of this class.
 	 * @param str - the string to be written
 	 */
-	private void writeToFile(String str){
-		//TODO
+	private boolean writeToFile(String str){
+		return false;
 	}
 	
 	/**
