@@ -237,5 +237,17 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 4, 5));
 		assertTrue(cm.getFutureMeeting(2).getDate().compareTo(myCal)==0);
 	}
+
+	/**
+	 * Test that getFutureMeeting(int) throws an IllegalArgumentException when given
+	 * the ID of a past meeting
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetFutureMeetingWithPastMeeting(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2011,4,2), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2012, 4, 2), "test");
+		cm.getFutureMeeting(3);
+	}
  }
 
