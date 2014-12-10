@@ -322,4 +322,10 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 
 	}
+
+	protected class ContactManagerWriter extends OutputStreamWriter {
+		protected ContactManagerWriter(OutputStream out){
+			super(out);
+		}
+	}
 }
