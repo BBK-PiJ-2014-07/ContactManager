@@ -324,8 +324,14 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	protected class ContactManagerWriter extends OutputStreamWriter {
-		protected ContactManagerWriter(OutputStream out){
+		protected ContactManagerWriter(OutputStream out) {
 			super(out);
+		}
+
+		public void write(Contact c) throws IOException {
+			//Get all the details of the contact as a string separated by commas
+			String contactDetails = "CONTACT," + c.getId() + "," +  c.getName() +  "," + c.getNotes() + "\n";
+			append(contactDetails);
 		}
 	}
 }
