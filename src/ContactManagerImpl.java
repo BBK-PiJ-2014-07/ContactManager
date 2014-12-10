@@ -11,8 +11,7 @@ import java.io.*;
  *
  */
 public class ContactManagerImpl implements ContactManager {
-	private FileWriter writer;
-	private FileReader reader;
+
 	private Calendar todaysDate;
 	private Set<Contact> contactList;
 	private int newContactId;
@@ -21,13 +20,7 @@ public class ContactManagerImpl implements ContactManager {
 	private List<Meeting> futureMeetingList;
 
 	public ContactManagerImpl() {
-		try {
-			this.writer = new FileWriter("contacts.txt");
-			this.reader = new FileReader("contacts.txt");
-		} catch (IOException e) {
-			// FileWriter throws exception so need to catch it
-			e.printStackTrace();
-		}
+
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
