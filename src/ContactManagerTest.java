@@ -1,5 +1,3 @@
-package cw4;
-
 import org.junit.*;
 
 import static org.junit.Assert.*;
@@ -28,7 +26,7 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
-		writer = new ContactManagerWriter(baos);
+		writer = cm.new ContactManagerWriter(baos);
 	}
 
 	/**
