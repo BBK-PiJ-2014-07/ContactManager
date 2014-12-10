@@ -322,9 +322,9 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 
 	}
-
+	/*
 	protected class ContactManagerWriter extends OutputStreamWriter {
-		protected ContactManagerWriter(OutputStream out) {
+		public ContactManagerWriter(OutputStream out) {
 			super(out);
 		}
 
@@ -333,5 +333,5 @@ public class ContactManagerImpl implements ContactManager {
 			String contactDetails = "CONTACT," + c.getId() + "," +  c.getName() +  "," + c.getNotes() + "\n";
 			append(contactDetails);
 		}
-	}
+	}*/
 }

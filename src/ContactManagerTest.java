@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.*;
 
 public class ContactManagerTest {
@@ -13,7 +12,7 @@ public class ContactManagerTest {
 	private FutureMeeting fm;
 	private Contact alan;
 	private Contact sarah;
-	private OutputStreamWriter writer;
+
 	private ByteArrayOutputStream baos;
 
 	@Before
@@ -26,16 +25,19 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
-		writer = cm.new ContactManagerWriter(baos);
+		baos = new ByteArrayOutputStream();
+
+
 	}
 
 	/**
 	 * Test that contact details are successfully written to a file
 	 */
-
+	@Test
 	public void testWriteContact() throws IOException {
 		writer.write(alan);
-		assertEquals(baos, "CONTACT, 1, Alan, nice");
+		String outputString = new String(baos.toByteArray());
+		assertEquals("CONTACT,1,Alan,nice", outputString);
 
 	}
 
