@@ -1,4 +1,5 @@
-import com.sun.xml.internal.bind.v2.util.ByteArrayOutputStreamEx;
+package cw4;
+
 import org.junit.*;
 
 import static org.junit.Assert.*;

@@ -1,3 +1,5 @@
+package cw4;
+
 /**
  * Implementation of FutureMeeting interface, extending MeetingImpl with exactly the 
  * same methods. 

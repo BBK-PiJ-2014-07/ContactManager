@@ -1,3 +1,5 @@
+package cw4;
+
 import org.junit.*;
 import static org.junit.Assert.*;
 

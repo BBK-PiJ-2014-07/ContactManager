@@ -1,3 +1,4 @@
+package cw4;
 
 public class ContactImpl implements Contact {
 	private int id;
