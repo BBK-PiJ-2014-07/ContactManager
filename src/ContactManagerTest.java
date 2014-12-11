@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.Future;
 
 public class ContactManagerTest {
 	private ContactManagerImpl cm; 		//not using interface as impl has more methods
@@ -37,6 +38,15 @@ public class ContactManagerTest {
 		assertTrue(actualOutput.contains("1,Alan,nice"));
 	}
 
+	/**
+	 * Test that future meeting details successfully written to file
+	 */
+	@Test
+	public void testWriteFutureMeeting() throws IOException {
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,2,3));
+		String actualOutput = writer.toString();
+		assertTrue(actualOutput.contains("1,2015,2,3,1|2"));
+	}
 	/**
 	 * Test that addFutureMeeting works as expected
 	 */
