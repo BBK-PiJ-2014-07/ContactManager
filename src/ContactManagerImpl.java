@@ -54,14 +54,9 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 		futureMeetingList.add(fm);
-		StringBuilder contactString = new StringBuilder();
-		for (Contact c: contacts){
-			contactString.append(c.getId() + "|");	//add all the IDs of the contacts in the set to the string
-		}
-		contactString.deleteCharAt(contactString.length()-1);	//shave off that last pole
-		String meetingData = newMeetingId + "," + dateToString(date) + "," + contactString;
+
 		try {
-			thisWriter.write(meetingData);
+			thisWriter.write(newMeetingId + "," + dateToString(date) + "," + contactsToString(contacts)+"\n");
 			flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
@@ -281,9 +276,9 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
-		String contactData = newContactId+","+name+","+notes+"\n";
+
 		try {
-			thisWriter.write(contactData);	//write the data
+			thisWriter.write(newContactId+","+name+","+notes+"\n");	//write the data
 			flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
