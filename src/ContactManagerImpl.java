@@ -59,7 +59,7 @@ public class ContactManagerImpl implements ContactManager {
 			contactString.append(c.getId() + "|");	//add all the IDs of the contacts in the set to the string
 		}
 		contactString.deleteCharAt(contactString.length()-1);	//shave off that last pole
-		String meetingData = newMeetingId + "," + date.get(1) + "," + date.get(2) + "," + date.get(5) + "," + contactString;
+		String meetingData = newMeetingId + "," + dateToString(date) + "," + contactString;
 		try {
 			thisWriter.write(meetingData);
 			flush();
