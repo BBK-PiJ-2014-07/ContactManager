@@ -55,7 +55,7 @@ public class ContactManagerTest {
 	public void testWritePastMeeting() throws IOException {
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,4), "notes");
 		String actualOutput = writer.toString();
-		assertTrue(actualOutput.contains("1,2013,5,4,notes,2|3"));
+		assertTrue(actualOutput.contains("1,2013,5,4,notes,1|2"));
 	}
 	/**
 	 * Test that addFutureMeeting works as expected
