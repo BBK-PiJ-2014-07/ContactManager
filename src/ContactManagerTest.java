@@ -11,10 +11,11 @@ public class ContactManagerTest {
 	private Set<Contact> contacts;
 	private Contact alan;
 	private Contact sarah;
-	private File testFile;
+
 
 	@Rule
-	TemporaryFolder folder = new TemporaryFolder();
+	public TemporaryFolder folder = new TemporaryFolder();
+	private File testFile;
 
 	@Before
 	public void buildUp() throws IOException {
@@ -26,7 +27,7 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
-		testFile = folder.newFile("test.txt");
+		testFile = folder.newFile();
 
 	}
 
@@ -36,9 +37,9 @@ public class ContactManagerTest {
 	@Test
 	public void testWriteContact() throws IOException {
 		cm.writeToFile(testFile, "1,Alan,nice");
-		BufferedReader outputReader = new BufferedReader(new FileReader(testFile));
-		String actualOutput = outputReader.readLine();
-		assertEquals(actualOutput,"1,Alan,nice");
+		BufferedReader in = new BufferedReader(new FileReader(testFile));
+		String actualOutput = in.readLine();
+		assertEquals("1,Alan,nice",actualOutput);
 	}
 
 	/**

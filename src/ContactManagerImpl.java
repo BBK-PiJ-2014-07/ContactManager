@@ -38,17 +38,22 @@ public class ContactManagerImpl implements ContactManager {
 	 * an error.
 	 * @Param str - the string to be written.
 	 */
-	protected void readFile(String str){
+	protected void readFile(File file){
 		 //TODO
 	}
 	/**
 	 * The method that writes to the file. It needs to check whether the file exists, and if so, append
 	 * rather than overwrite.
 	 * It is private as it should not be accessed outside of this class.
-	 * @param str - the string to be written
+	 * @param file - the file that should be written to (ie contacts.txt)
+	 * @param data - the string to be written
 	 */
-	protected void writeToFile(String str){
-		 //TODO
+	protected void writeToFile(File file, String data) throws IOException {
+		if (!file.exists()){
+			file.createNewFile();	//if the file doesn't exist, create it
+		}
+		FileWriter writer = new FileWriter((file));
+		writer.append(data); //append so as not to overwrite
 	}
 	
 	/**
