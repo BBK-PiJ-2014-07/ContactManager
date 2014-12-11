@@ -26,6 +26,10 @@ public class ContactManagerImpl implements ContactManager {
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
 		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
 		todaysDate = new GregorianCalendar();
+		todaysDate.set(Calendar.HOUR_OF_DAY,0);
+		todaysDate.set(Calendar.MINUTE,0);
+		todaysDate.set(Calendar.SECOND,0);
+		todaysDate.set(Calendar.MILLISECOND,0);
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
 
 	}
@@ -249,9 +253,10 @@ public class ContactManagerImpl implements ContactManager {
 		if (futureMeetingList.stream().noneMatch(m -> m.getId() == id)){
 			throw new IllegalArgumentException();
 		}
-
-
 		Meeting thisMeeting = getFutureMeeting(id);
+		if (thisMeeting.getDate().after(todaysDate)){
+			throw new IllegalStateException();
+		}
 		futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
 		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
 		pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
