@@ -35,9 +35,8 @@ public class ContactManagerTest {
 	*/
 	@Test
 	public void testWriteContact() throws IOException {
-		cm.writeToFile("1,Alan,nice");
-		File outputFile = new File("contactsTest.txt");
-		BufferedReader outputReader = new BufferedReader(new FileReader(outputFile));
+		cm.writeToFile(testFile, "1,Alan,nice");
+		BufferedReader outputReader = new BufferedReader(new FileReader(testFile));
 		String actualOutput = outputReader.readLine();
 		assertEquals(actualOutput,"1,Alan,nice");
 	}

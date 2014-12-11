@@ -25,12 +25,12 @@ public class ContactManagerImpl implements ContactManager {
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
 		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
+		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
 		todaysDate.set(Calendar.MINUTE,0);
 		todaysDate.set(Calendar.SECOND,0);
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
-		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
 
 	}
 	/**
