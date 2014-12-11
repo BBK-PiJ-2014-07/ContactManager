@@ -125,10 +125,20 @@ public class ContactManagerTest {
 	@Test
 	public void testAddMeetingNotesConvertsToPastMeeting() {
 		PastMeeting examplePastMeeting = new PastMeetingImpl(3, contacts, new GregorianCalendar(2013,2,5), "test");
-		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,12));
 		cm.addMeetingNotes(1, "now a past meeting");
 		assertTrue(cm.getMeeting(1).getClass()==examplePastMeeting.getClass());
 	}
+
+	@Test
+	public void testAddMeetingNotesActuallyAddsMeetingNotes(){
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,12));
+		cm.addMeetingNotes(1, "now a past meeting");
+		assertEquals(cm.getPastMeeting(1).getNotes(),"now a past meeting");
+	}
+
+
+
 	/**
 	 * Test normal functionality of addNewContact()
 	 */
