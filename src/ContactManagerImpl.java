@@ -290,7 +290,12 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
-		//write new contact to file
+		String contactData = newContactId+","+name+","+notes+"\n";
+		try {
+			thisWriter.write(contactData);	//write the data
+		} catch (IOException ex){
+			ex.printStackTrace();
+		}
 		newContactId++; //increment newContactId for next contact
 	}
 
