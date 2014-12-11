@@ -54,6 +54,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		FileWriter writer = new FileWriter((file));
 		writer.append(data); //append so as not to overwrite
+		writer.close(); //temp measure before flush is instantiated
 	}
 	
 	/**

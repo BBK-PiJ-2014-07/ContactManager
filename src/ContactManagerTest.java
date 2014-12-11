@@ -1,5 +1,4 @@
 import org.junit.*;
-import org.junit.rules.TemporaryFolder;
 
 import static org.junit.Assert.*;
 
@@ -11,15 +10,13 @@ public class ContactManagerTest {
 	private Set<Contact> contacts;
 	private Contact alan;
 	private Contact sarah;
+	private StringWriter writer;
 
-
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
-	private File testFile;
 
 	@Before
 	public void buildUp() throws IOException {
-		cm = new ContactManagerImpl();
+		writer = new StringWriter();
+		cm = new ContactManagerImpl(writer);
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");
 		contacts.add(alan);
@@ -27,7 +24,7 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
-		testFile = folder.newFile();
+
 
 	}
 
@@ -36,10 +33,9 @@ public class ContactManagerTest {
 	*/
 	@Test
 	public void testWriteContact() throws IOException {
-		cm.writeToFile(testFile, "1,Alan,nice");
-		BufferedReader in = new BufferedReader(new FileReader(testFile));
-		String actualOutput = in.readLine();
-		assertEquals("1,Alan,nice",actualOutput);
+		cm.addNewContact("Alan", "nice");
+		String actualOutput = writer.toString();
+		assertEquals("1,Alan,nice", actualOutput);
 	}
 
 	/**
@@ -357,5 +353,6 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
 		assertNull(cm.getPastMeeting(88));
 	}
+
 }
 
