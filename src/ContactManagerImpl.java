@@ -164,12 +164,7 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public List<Meeting> getFutureMeetingList(Calendar date) {
 		List<Meeting> result = new ArrayList<Meeting>();
-		for (Meeting fm : futureMeetingList){
-			if (fm.getDate().compareTo(date)==0){
-				result.add(fm);
-			}
-		}
-
+		futureMeetingList.stream().filter(m->m.getDate().compareTo(date)==0).forEach(result::add);
 		return result;
 	}
 
@@ -190,11 +185,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException();
 		}
 		List<PastMeeting> result = new ArrayList<PastMeeting>();
-		for (PastMeeting pm: pastMeetingList) {
-			if (pm.getContacts().contains(contact)){
-				result.add(pm);
-			}
-		}
+		pastMeetingList.stream().filter(pm->pm.getContacts().contains(contact)).forEach(result::add);
 		return result;
 	}
 
@@ -320,11 +311,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException();
 		}
 		Set<Contact> result = new HashSet<Contact>();
-		for (Contact c: contactList){
-			if (c.getName().equals(name)){
-				result.add(c);
-			}
-		}
+		contactList.stream().filter(c -> c.getName().equals(name)).forEach(result::add);
 		return result;
 	}
 	
@@ -343,10 +330,20 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 
+	/**
+	 * Converts a Calendar to a string.
+	 * @param date
+	 * @return a String representation of the year, the month and the day separated by commas
+	 */
 	public String dateToString(Calendar date){
-		return date.get(1)+","+date.get(2)+","+date.get(5);
+		return date.get(Calendar.YEAR)+","+date.get(Calendar.MONTH)+","+date.get(Calendar.DAY_OF_MONTH);
 	}
 
+	/**
+	 * Converts a contact set to a string.
+	 * @param contacts
+	 * @return a String representation of the contacts separated by pipes
+	 */
 	public String contactsToString(Set<Contact> contacts){
 		StringBuilder contactString = new StringBuilder();
 		for (Contact c: contacts) contactString.append(c.getId() + "|"); 	//add IDs separated by poles
