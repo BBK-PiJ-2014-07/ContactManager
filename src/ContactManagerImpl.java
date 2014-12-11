@@ -18,9 +18,15 @@ public class ContactManagerImpl implements ContactManager {
 	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
+	private Writer thisWriter;
 
-	public ContactManagerImpl() {
+	public ContactManagerImpl() throws IOException {
+		this(new FileWriter("contacts.txt"));
 
+	}
+
+	public ContactManagerImpl(Writer w){
+		w = thisWriter;
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
@@ -31,7 +37,6 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MINUTE,0);
 		todaysDate.set(Calendar.SECOND,0);
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
-
 	}
 	/**
 	 * The method that reads from the file. It needs to check whether the file exists, and if not, return
