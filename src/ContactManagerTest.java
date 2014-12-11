@@ -135,18 +135,28 @@ public class ContactManagerTest {
 		assertEquals(cm.getPastMeeting(1).getNotes(),"now a past meeting");
 	}
 
+	/**
+	* Test that passing addMeetingNotes() a meeting id that doesn't exist throws an
+	 * IllegalArgumentException
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddMeetingNotesWithIllegalMeeting(){
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
 		cm.addMeetingNotes(12,"illegal meeting");
 	}
 
+	/**
+	 * Test that passing a meeting with a future date into addMeetingNotes() throws an IllegalStateException
+	 */
 	@Test(expected = IllegalStateException.class)
 	public void testAddMeetingNotesWithFutureDate(){
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,11,12));
 		cm.addMeetingNotes(1,"illegal date");
 	}
 
+	/**
+	 * Test that addMeetingNotes() throws a NullPointerException if notes are null
+	 */
 	@Test(expected = NullPointerException.class)
 	public void testAddMeetingNotesWithNullNotes(){
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
