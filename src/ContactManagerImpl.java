@@ -347,5 +347,9 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 
+	public String dateToString(Calendar date){
+		return date.get(1)+","+date.get(2)+","+date.get(5);
+	}
+
 
 }
