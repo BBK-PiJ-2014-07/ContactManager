@@ -119,6 +119,17 @@ public class ContactManagerTest {
 	*/
 
 	/**
+	 * Test normal functionality of addMeetingNotes()
+	 */
+
+	@Test
+	public void testAddMeetingNotesConvertsToPastMeeting() {
+		PastMeeting examplePastMeeting = new PastMeetingImpl(3, contacts, new GregorianCalendar(2013,2,5), "test");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
+		cm.addMeetingNotes(1, "now a past meeting");
+		assertTrue(cm.getMeeting(1).getClass()==examplePastMeeting.getClass());
+	}
+	/**
 	 * Test normal functionality of addNewContact()
 	 */
 	@Test
