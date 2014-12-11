@@ -26,7 +26,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	public ContactManagerImpl(Writer w){
-		w = thisWriter;
+		thisWriter = w;
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
