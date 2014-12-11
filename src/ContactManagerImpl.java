@@ -29,7 +29,7 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
 		todaysDate.set(Calendar.MINUTE,0);
 		todaysDate.set(Calendar.SECOND,0);
-		todaysDate.set(Calendar.MILLISECOND,0);
+		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
 
 	}
@@ -220,14 +220,14 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if any of the arguments is null
 	*/
 
-	public void addNewPastMeeting(Set<Contact> contacts, Calendar date,
-			String text) {
+	public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text) {
 		if (contacts == null || date == null || text == null) {
 			throw new NullPointerException();
 		}
 		if (contacts.isEmpty() || !contactList.containsAll(contacts)){
 			throw new IllegalArgumentException();
 		}
+
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
 		newMeetingId++;
@@ -256,6 +256,9 @@ public class ContactManagerImpl implements ContactManager {
 		Meeting thisMeeting = getFutureMeeting(id);
 		if (thisMeeting.getDate().after(todaysDate)){
 			throw new IllegalStateException();
+		}
+		if (text == null) {
+			throw new NullPointerException();
 		}
 		futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
 		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
