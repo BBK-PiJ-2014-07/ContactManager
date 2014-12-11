@@ -3,13 +3,11 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
 
 public class ContactManagerTest {
 	private ContactManagerImpl cm; 		//not using interface as impl has more methods
 	private Set<Contact> contacts;
-	private FutureMeeting fm;
 	private Contact alan;
 	private Contact sarah;
 	private File testFile;
@@ -137,7 +135,11 @@ public class ContactManagerTest {
 		assertEquals(cm.getPastMeeting(1).getNotes(),"now a past meeting");
 	}
 
-
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddMeetingNotesWithIllegalMeeting(){
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,12));
+		cm.addMeetingNotes(12,"illegal meeting");
+	}
 
 	/**
 	 * Test normal functionality of addNewContact()
