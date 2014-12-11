@@ -2,10 +2,8 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 public class ContactManagerTest {
@@ -33,14 +31,16 @@ public class ContactManagerTest {
 
 	/**
 	 * Test that contact details are successfully written to a file
-	 */
+
 	@Test
 	public void testWriteContact() throws IOException {
-
-		cm.writeToFile("hello");
-		assert
+		cm.writeToFile("1,Alan,nice");
+		File outputFile = new File("contactsTest.txt");
+		BufferedReader outputReader = new BufferedReader(new FileReader(outputFile));
+		String actualOutput = outputReader.readLine();
+		assertEquals(actualOutput,"1,Alan,nice");
 	}
-
+	*/
 	/**
 	 * Test that addFutureMeeting works as expected
 	 */
