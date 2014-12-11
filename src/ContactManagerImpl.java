@@ -34,7 +34,7 @@ public class ContactManagerImpl implements ContactManager {
 	 * an error.
 	 * @Param str - the string to be written.
 	 */
-	private void readFile(String str){
+	protected void readFile(String str){
 		 //TODO
 	}
 	/**
@@ -43,7 +43,7 @@ public class ContactManagerImpl implements ContactManager {
 	 * It is private as it should not be accessed outside of this class.
 	 * @param str - the string to be written
 	 */
-	private void writeToFile(String str){
+	protected void writeToFile(String str){
 		 //TODO
 	}
 	
