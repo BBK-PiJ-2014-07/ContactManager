@@ -246,6 +246,11 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the notes are null
 	*/
 	public void addMeetingNotes(int id, String text) {
+		if (futureMeetingList.stream().noneMatch(m -> m.getId() == id)){
+			throw new IllegalArgumentException();
+		}
+
+
 		Meeting thisMeeting = getFutureMeeting(id);
 		futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
 		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
