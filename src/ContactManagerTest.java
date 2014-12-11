@@ -13,8 +13,7 @@ public class ContactManagerTest {
 	private FutureMeeting fm;
 	private Contact alan;
 	private Contact sarah;
-	private OutputStreamWriter testWriter;
-	private ByteArrayOutputStream baos;
+
 
 	@Before
 	public void buildUp(){
