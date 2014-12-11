@@ -141,6 +141,11 @@ public class ContactManagerTest {
 		cm.addMeetingNotes(12,"illegal meeting");
 	}
 
+	@Test(expected = IllegalStateException.class)
+	public void testAddMeetingNotesWithFutureDate(){
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,11,12));
+		cm.addMeetingNotes(1,"illegal date");
+	}
 	/**
 	 * Test normal functionality of addNewContact()
 	 */
