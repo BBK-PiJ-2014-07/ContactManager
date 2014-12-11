@@ -48,6 +48,9 @@ public class ContactManagerTest {
 		assertTrue(actualOutput.contains("1,2015,2,3,1|2"));
 	}
 
+	/**
+	 * Test that past meeting details successfully written to file
+	 */
 	@Test
 	public void testWritePastMeeting() throws IOException {
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,4), "notes");
@@ -378,6 +381,15 @@ public class ContactManagerTest {
 		Calendar myCal = new GregorianCalendar(2015,5,5);
 		String testString = cm.dateToString(myCal);
 		assertEquals(testString,"2015,5,5");
+	}
+
+	/**
+	 * Test that contactsToString() works correctly
+	 */
+	@Test
+	public void testContactsToString(){
+		String testString = cm.contactsToString(contacts);
+		assertEquals(testString, "1|2");
 	}
 }
 
