@@ -29,6 +29,17 @@ public class ContactManagerTest {
 
 	}
 
+
+	/**
+	 * Test that constructing ContactManagerImpl with a file that doesn't exist doesn't cause a FileNotFound Ex
+	 */
+	@Test
+	public void testConstructorNoParams() throws IOException{
+		ContactManager anotherCm = new ContactManagerImpl();
+		anotherCm.addNewContact("Alan", "new");
+		Set<Contact> getCont = anotherCm.getContacts("Alan");
+		assertFalse(getCont.isEmpty());
+	}
 	/**
 	 * Test that contact details are successfully written to a file
 	*/

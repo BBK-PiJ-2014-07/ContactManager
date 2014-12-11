@@ -147,11 +147,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException();
 		}
 		List<Meeting> result = new ArrayList<Meeting>();
-		for (Meeting fm: futureMeetingList){
-			if (fm.getContacts().contains(contact)){
-				result.add(fm);
-			}
-		}
+		futureMeetingList.stream().filter(m -> m.getContacts().contains(contact)).forEach(result::add);
 		return result;
 	}
 	
