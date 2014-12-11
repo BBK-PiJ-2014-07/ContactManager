@@ -49,15 +49,25 @@ public class ContactManagerImpl implements ContactManager {
 	* of if any contact is unknown / non-existent
 	*/
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
-		FutureMeeting fm = null;
 		if (date.before(todaysDate) || !contactList.containsAll(contacts)) {	//check date + contacts
 			throw new IllegalArgumentException();
-		} else {
-			fm = new FutureMeetingImpl(newMeetingId, contacts, date);
-			futureMeetingList.add(fm);
-			//write to file
-			newMeetingId++;
 		}
+		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
+		futureMeetingList.add(fm);
+		StringBuilder contactString = new StringBuilder();
+		for (Contact c: contacts){
+			contactString.append(c.getId() + "|");	//add all the IDs of the contacts in the set to the string
+		}
+		contactString.deleteCharAt(contactString.length()-1);	//shave off that last pole
+		String meetingData = newMeetingId + "," + date.get(1) + "," + date.get(2) + "," + date.get(5) + "," + contactString;
+		try {
+			thisWriter.write(meetingData);
+			flush();
+		} catch (IOException ex){
+			ex.printStackTrace();
+		}
+		newMeetingId++;
+
 		return fm.getId();
 	}
 
@@ -336,5 +346,6 @@ public class ContactManagerImpl implements ContactManager {
 		}
 
 	}
+
 
 }
