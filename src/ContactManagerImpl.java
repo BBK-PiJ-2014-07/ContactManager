@@ -38,30 +38,7 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.SECOND,0);
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 	}
-	/**
-	 * The method that reads from the file. It needs to check whether the file exists, and if not, return
-	 * an error.
-	 * @Param str - the string to be written.
-	 */
-	protected void readFile(File file){
-		 //TODO
-	}
-	/**
-	 * The method that writes to the file. It needs to check whether the file exists, and if so, append
-	 * rather than overwrite.
-	 * It is private as it should not be accessed outside of this class.
-	 * @param file - the file that should be written to (ie contacts.txt)
-	 * @param data - the string to be written
-	 */
-	protected void writeToFile(File file, String data) throws IOException {
-		if (!file.exists()){
-			file.createNewFile();	//if the file doesn't exist, create it
-		}
-		FileWriter writer = new FileWriter((file));
-		writer.append(data); //append so as not to overwrite
-		writer.close(); //temp measure before flush is instantiated
-	}
-	
+
 	/**
 	* Add a new meeting to be held in the future.
 	*
