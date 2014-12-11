@@ -246,8 +246,11 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the notes are null
 	*/
 	public void addMeetingNotes(int id, String text) {
-		// TODO Auto-generated method stub
-
+		Meeting thisMeeting = getFutureMeeting(id);
+		futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
+		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
+		pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
+		//write to file
 	}
 	
 	/**
@@ -322,16 +325,5 @@ public class ContactManagerImpl implements ContactManager {
 		// TODO Auto-generated method stub
 
 	}
-	/*
-	protected class ContactManagerWriter extends OutputStreamWriter {
-		public ContactManagerWriter(OutputStream out) {
-			super(out);
-		}
 
-		public void write(Contact c) throws IOException {
-			//Get all the details of the contact as a string separated by commas
-			String contactDetails = "CONTACT," + c.getId() + "," +  c.getName() +  "," + c.getNotes() + "\n";
-			append(contactDetails);
-		}
-	}*/
 }
