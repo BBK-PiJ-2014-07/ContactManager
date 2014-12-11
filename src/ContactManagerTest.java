@@ -1,4 +1,5 @@
 import org.junit.*;
+import org.junit.rules.TemporaryFolder;
 
 import static org.junit.Assert.*;
 
@@ -12,9 +13,11 @@ public class ContactManagerTest {
 	private Contact sarah;
 	private File testFile;
 
+	@Rule
+	TemporaryFolder folder = new TemporaryFolder();
 
 	@Before
-	public void buildUp(){
+	public void buildUp() throws IOException {
 		cm = new ContactManagerImpl();
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");
@@ -23,13 +26,13 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
-		testFile = new File("testOutput.txt");
+		testFile = folder.newFile("test.txt");
 
 	}
 
 	/**
 	 * Test that contact details are successfully written to a file
-
+	*/
 	@Test
 	public void testWriteContact() throws IOException {
 		cm.writeToFile("1,Alan,nice");
@@ -38,7 +41,7 @@ public class ContactManagerTest {
 		String actualOutput = outputReader.readLine();
 		assertEquals(actualOutput,"1,Alan,nice");
 	}
-	*/
+
 	/**
 	 * Test that addFutureMeeting works as expected
 	 */
