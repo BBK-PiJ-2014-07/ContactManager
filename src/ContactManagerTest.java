@@ -3,6 +3,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.*;
@@ -13,6 +14,7 @@ public class ContactManagerTest {
 	private FutureMeeting fm;
 	private Contact alan;
 	private Contact sarah;
+	private File testFile;
 
 
 	@Before
@@ -25,6 +27,7 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
+		testFile = new File("testOutput.txt");
 
 	}
 
@@ -33,8 +36,9 @@ public class ContactManagerTest {
 	 */
 	@Test
 	public void testWriteContact() throws IOException {
-		cm.writeToFile("hello");
 
+		cm.writeToFile("hello");
+		assert
 	}
 
 	/**
