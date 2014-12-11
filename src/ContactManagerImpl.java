@@ -34,8 +34,8 @@ public class ContactManagerImpl implements ContactManager {
 	 * an error.
 	 * @Param str - the string to be written.
 	 */
-	private boolean readFile(String str){
-		return false;
+	private void readFile(String str){
+		 //TODO
 	}
 	/**
 	 * The method that writes to the file. It needs to check whether the file exists, and if so, append
@@ -43,8 +43,8 @@ public class ContactManagerImpl implements ContactManager {
 	 * It is private as it should not be accessed outside of this class.
 	 * @param str - the string to be written
 	 */
-	private boolean writeToFile(String str){
-		return false;
+	private void writeToFile(String str){
+		 //TODO
 	}
 	
 	/**
