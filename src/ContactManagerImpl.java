@@ -229,7 +229,11 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
 		newMeetingId++;
-		//write to file
+		/*try {
+			thisWriter.write(newMeetingId+","+dateToString(date)+","+text+","+contactsToString())
+		}catch (IOException ex){
+			ex.printStackTrace();
+		}*/
 	}
 
 
@@ -351,5 +355,10 @@ public class ContactManagerImpl implements ContactManager {
 		return date.get(1)+","+date.get(2)+","+date.get(5);
 	}
 
-
+	public String contactsToString(Set<Contact> contacts){
+		StringBuilder contactString = new StringBuilder();
+		for (Contact c: contacts) contactString.append(c.getId() + "|");
+		contactString.deleteCharAt(contactString.length()-1);
+		return String.valueOf(contactString);
+	}
 }
