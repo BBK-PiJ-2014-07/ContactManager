@@ -270,6 +270,7 @@ public class ContactManagerImpl implements ContactManager {
 		String contactData = newContactId+","+name+","+notes+"\n";
 		try {
 			thisWriter.write(contactData);	//write the data
+			flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
