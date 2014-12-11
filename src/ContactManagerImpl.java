@@ -346,7 +346,11 @@ public class ContactManagerImpl implements ContactManager {
 	* closed and when/if the user requests it.
 	*/
 	public void flush() {
-		// TODO Auto-generated method stub
+		try {
+			thisWriter.flush();
+		} catch (IOException ex){
+			ex.printStackTrace();
+		}
 
 	}
 
