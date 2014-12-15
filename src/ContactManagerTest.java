@@ -38,11 +38,25 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that program initialises correctly and creates new objects from existing data in file
+	 * Test that program initialises correctly and creates new contacts from existing data in file
 	 */
 	@Test
-	public void testInitialiseObjects(){
+	public void testInitialiseContacts(){
 		assertEquals(cm.getContacts(1), alan);
+	}
+	/**
+	 * Test that program initialises correctly and creates new contacts from existing data in file
+	 */
+	@Test
+	public void testInitialisePastMeeting(){
+		assertEquals(cm.getPastMeeting(1).getNotes(),"boring meeting");
+	}
+	/**
+	 * Test that program initialises correctly and creates new contacts from existing data in file
+	 */
+	@Test
+	public void testInitialiseFutureMeeting(){
+		assertEquals(cm.getFutureMeeting(1).getContacts(),contacts);
 	}
 	/**
 	 * Test that contact details are successfully written to a file
