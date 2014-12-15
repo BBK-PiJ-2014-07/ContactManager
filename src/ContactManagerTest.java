@@ -24,8 +24,8 @@ public class ContactManagerTest {
 		contacts.add(alan);
 		sarah = new ContactImpl(2, "Sarah", "horrible");
 		contacts.add(sarah);
-		cm.addNewContact("Alan", "nice");
-		cm.addNewContact("Sarah", "horrible");
+		//cm.addNewContact("Alan", "nice");
+		//.addNewContact("Sarah", "horrible");
 
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
@@ -37,6 +37,13 @@ public class ContactManagerTest {
 
 	}
 
+	/**
+	 * Test that program initialises correctly and creates new objects from existing data in file
+	 */
+	@Test
+	public void testInitialiseObjects(){
+		assertEquals(cm.getContacts(1), alan);
+	}
 	/**
 	 * Test that contact details are successfully written to a file
 	*/
