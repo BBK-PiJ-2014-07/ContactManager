@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.Future;
 
 public class ContactManagerTest {
 	private ContactManagerImpl cm; 		//not using interface as impl has more methods
@@ -18,7 +17,8 @@ public class ContactManagerTest {
 	@Before
 	public void buildUp() throws IOException {
 		writer = new StringWriter();
-		cm = new ContactManagerImpl(writer);
+		String testingContent = "1,Alan,nice\n2,Sarah,horrible\n1,2013,4,3,boring meeting,1|2\n2,2015,2,5,1|2";
+		cm = new ContactManagerImpl(writer, testingContent);
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");
 		contacts.add(alan);
@@ -26,6 +26,7 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
+
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
 		todaysDate.set(Calendar.MINUTE, 0);
@@ -36,17 +37,6 @@ public class ContactManagerTest {
 
 	}
 
-
-	/**
-	 * Test that constructing ContactManagerImpl with a file that doesn't exist doesn't cause a FileNotFound Ex
-	 */
-	@Test
-	public void testConstructorNoParams() throws IOException{
-		ContactManager anotherCm = new ContactManagerImpl();
-		anotherCm.addNewContact("Alan", "new");
-		Set<Contact> getCont = anotherCm.getContacts("Alan");
-		assertFalse(getCont.isEmpty());
-	}
 	/**
 	 * Test that contact details are successfully written to a file
 	*/
