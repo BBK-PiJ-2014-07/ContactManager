@@ -1,3 +1,4 @@
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
@@ -28,15 +29,39 @@ public class ContactManagerImpl implements ContactManager {
 	public ContactManagerImpl() throws IOException{
 		contactsFile = new File("contacts.txt");
 		cmWriter = new FileWriter(contactsFile);
-		cmReader = new FileReader(contactsFile);
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
 		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
+		for (String thisLine : Files.readAllLines(contactsFile.toPath())){
+			String[] lineToArray = thisLine.split(",");	//split each line of the file by commas
+			if (lineToArray.length==3){
+				//if the line is of length 3 (3 strings + EOF) then it's a contact
+				//Instantiate contact
+			} else {
+				//Otherwise it must be a meeting - the last String in the array will be the contacts
+				String[] contacts = lineToArray[lineToArray.length-1].split("|");
+				int[] contIds = new int[contacts.length];
+				for (String stringId: contacts){
+					contIds[i] = Integer.parseInt(stringId);
+				}
+				Set<Contact> thisMeetingContacts = getContacts(contIds);
+
+				if (lineToArray.length == 6){
+					//if the line is of length 6 (5 strings + EOF) then it's a past meeting
+				} else {
+					//otherwise it's a future meeting
+					// create new future meeting
+				}
+			}
+
+		}
+
+
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
-		todaysDate.set(Calendar.MINUTE,0);
+		todaysDate.set(Calendar.MINUTE, 0);
 		todaysDate.set(Calendar.SECOND,0);
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 	}
@@ -176,7 +201,11 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public List<Meeting> getFutureMeetingList(Calendar date) {
 		List<Meeting> result = new ArrayList<Meeting>();
-		futureMeetingList.stream().filter(m->m.getDate().compareTo(date)==0).forEach(result::add);
+		if (date.before(todaysDate)) {
+			pastMeetingList.stream().filter(m -> m.getDate().compareTo(date) == 0).forEach(result::add);
+		} else {
+			futureMeetingList.stream().filter(m->m.getDate().compareTo(date)==0).forEach(result::add);
+		}
 		return result;
 	}
 
