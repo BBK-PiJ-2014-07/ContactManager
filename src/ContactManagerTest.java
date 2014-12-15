@@ -10,14 +10,11 @@ public class ContactManagerTest {
 	private Set<Contact> contacts;
 	private Contact alan;
 	private Contact sarah;
-	private StringWriter writer;
 	private Calendar todaysDate;
 
 
 	@Before
 	public void buildUp() throws IOException {
-		writer = new StringWriter();
-		String testingContent = "1,Alan,nice\n2,Sarah,horrible\n1,2013,4,3,boring meeting,1|2\n2,2015,2,5,1|2";
 		cm = new ContactManagerImpl();
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");

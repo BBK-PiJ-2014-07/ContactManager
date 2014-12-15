@@ -21,20 +21,16 @@ public class ContactManagerImpl implements ContactManager {
 	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
-	private Writer cmWriter;
-
 	private File contactsFile;
 
 
 	public ContactManagerImpl() throws IOException{
 		contactsFile = new File("contacts.txt");
-		cmWriter = new FileWriter(contactsFile);
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
 		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
-
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
 		todaysDate.set(Calendar.MINUTE, 0);
@@ -57,12 +53,6 @@ public class ContactManagerImpl implements ContactManager {
 		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 		futureMeetingList.add(fm);
 
-		try {
-			cmWriter.write(newMeetingId + "," + dateToString(date) + "," + contactsToString(contacts) + "\n");
-			cmWriter.flush();
-		} catch (IOException ex){
-			ex.printStackTrace();
-		}
 		newMeetingId++;
 
 		return fm.getId();
@@ -217,12 +207,6 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
 
-		try {
-			cmWriter.write(newMeetingId + "," + dateToString(date) + "," + text + "," + contactsToString(contacts) + "\n");
-			cmWriter.flush();
-		}catch (IOException ex){
-			ex.printStackTrace();
-		}
 		newMeetingId++;
 	}
 
@@ -272,12 +256,7 @@ public class ContactManagerImpl implements ContactManager {
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
 
-		try {
-			cmWriter.write(newContactId + "," + name + "," + notes + "\n");	//write the data
-			cmWriter.flush();
-		} catch (IOException ex){
-			ex.printStackTrace();
-		}
+
 		newContactId++; //increment newContactId for next contact
 	}
 
@@ -323,11 +302,7 @@ public class ContactManagerImpl implements ContactManager {
 	* closed and when/if the user requests it.
 	*/
 	public void flush() {
-		try {
-			cmWriter.close();
-		} catch (IOException ex){
-			ex.printStackTrace();
-		}
+		//TODO
 
 	}
 
