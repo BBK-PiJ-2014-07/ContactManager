@@ -40,7 +40,27 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
-
+		Object o = null;
+		try {
+			while ((o = inputStream.readObject()) != null){
+                if (o instanceof Contact){
+					Contact newCont = (Contact) o;
+					contactList.add(newCont);
+					newContactId++;
+				} else {
+					if (o instanceof PastMeeting){
+						PastMeeting pm = (PastMeeting) o;
+						pastMeetingList.add(pm);
+					} else {
+						Meeting fm = (Meeting) o;
+						futureMeetingList.add(fm);
+					}
+					newMeetingId++;
+				}
+            }
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
 	}
 
