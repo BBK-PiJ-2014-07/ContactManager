@@ -8,6 +8,8 @@ import java.io.*;
 
 /**
  * Implementation of ContactManager
+ * @author Sophie Koonin
+ * @see ContactManager
  *
  */
 public class ContactManagerImpl implements ContactManager {
@@ -38,7 +40,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	/**
 	 * Constructor that takes a writer for testing purposes
-	 * @param w the writer to be used in this program - use StringWriter for JUnit testing
+	 * @param writer the writer to be used in this program - I use StringWriter for JUnit testing
 	 */
 	public ContactManagerImpl(Writer writer) throws IOException {
 		this();
@@ -47,7 +49,6 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	/**
 	* Add a new meeting to be held in the future.
-	*
 	* @param contacts a list of contacts that will participate in the meeting
 	* @param date the date on which the meeting will take place
 	* @return the ID for the meeting
@@ -291,13 +292,8 @@ public class ContactManagerImpl implements ContactManager {
 		Set<Contact> result = new HashSet<Contact>();
 		for (int thisId: ids) {
 			int contactsFound=0;	//flag to indicate whether matching contacts have been found
-			for (Contact c : contactList) {
-				if (c.getId() == thisId) {
-					result.add(c);
-					contactsFound++;
-				}
-			}
-			if (contactsFound==0){
+			contactList.stream().filter(c->c.getId() == thisId).forEach(result::add);
+			if (result.isEmpty()){
 				throw new IllegalArgumentException(); 	//if no contacts with that ID are found
 			}
 		}
