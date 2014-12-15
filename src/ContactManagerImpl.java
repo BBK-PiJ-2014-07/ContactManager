@@ -41,6 +41,7 @@ public class ContactManagerImpl implements ContactManager {
 				//Instantiate contact
 			} else {
 				//Otherwise it must be a meeting - the last String in the array will be the contacts
+				// Both kinds of meetings have contact sets so need to get these first
 				String[] contacts = lineToArray[lineToArray.length-1].split("|");
 				int[] contIds = new int[contacts.length];
 				for (String stringId: contacts){
@@ -48,11 +49,23 @@ public class ContactManagerImpl implements ContactManager {
 				}
 				Set<Contact> thisMeetingContacts = getContacts(contIds);
 
+				//Both kinds of meeting also have IDs and dates, so can get these too
+				int meetingId = Integer.parseInt(lineToArray[0]);
+				newMeetingId++;
+				int meetingYear = Integer.parseInt(lineToArray[1]);
+				int meetingMonth = Integer.parseInt(lineToArray[2]);
+				int meetingDay = Integer.parseInt(lineToArray[3]);
+				Calendar meetingDate = new GregorianCalendar(meetingYear,meetingMonth,meetingDay);
+
 				if (lineToArray.length == 6){
 					//if the line is of length 6 (5 strings + EOF) then it's a past meeting
+					String meetingNotes = lineToArray[4];
+					PastMeeting pm = new PastMeetingImpl(meetingId,thisMeetingContacts,meetingDate,meetingNotes);
+					pastMeetingList.add(pm);
 				} else {
 					//otherwise it's a future meeting
-					// create new future meeting
+					Meeting fm = new MeetingImpl(meetingId,thisMeetingContacts,meetingDate);
+					futureMeetingList.add(fm);
 				}
 			}
 
