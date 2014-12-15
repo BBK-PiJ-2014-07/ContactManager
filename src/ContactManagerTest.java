@@ -35,6 +35,24 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that objects are serialized and deserialized correctly
+	 */
+	@Test
+	public void testSerialization() throws IOException{
+		ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+		ObjectOutputStream objOutput = new ObjectOutputStream(byteOutput);
+		objOutput.writeObject(alan);
+		objOutput.close();
+		ObjectInputStream objInput = new ObjectInputStream(new ByteArrayInputStream(byteOutput.toByteArray()));
+		Contact readCont = null;
+		try {
+			readCont = (Contact) objInput.readObject();
+		} catch (ClassNotFoundException cnfex){
+			cnfex.printStackTrace();
+		}
+		assertEquals(readCont,alan);
+	}
+	/**
 	 * Test that addFutureMeeting works as expected
 	 */
 	@Test
