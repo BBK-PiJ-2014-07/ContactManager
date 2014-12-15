@@ -34,46 +34,6 @@ public class ContactManagerImpl implements ContactManager {
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
 		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
 		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
-		for (String thisLine : Files.readAllLines(contactsFile.toPath())){
-			String[] lineToArray = thisLine.split(",");	//split each line of the file by commas
-			if (lineToArray.length==3){
-				//if the line is of length 3 (3 strings + EOF) then it's a contact
-				int contactId = Integer.parseInt(lineToArray[0]);
-				Contact c = new ContactImpl(contactId, lineToArray[1], lineToArray[2]);
-				contactList.add(c);
-				newContactId++;
-			} else {
-				//Otherwise it must be a meeting - the last String in the array will be the contacts
-				// Both kinds of meetings have contact sets so need to get these first
-				String[] contacts = lineToArray[lineToArray.length-1].split("|");
-				int[] contIds = new int[contacts.length];
-				for (int i = 0; i< contacts.length; i++){
-					contIds[i] = Integer.parseInt(contacts[i]);
-				}
-				Set<Contact> thisMeetingContacts = getContacts(contIds);
-
-				//Both kinds of meeting also have IDs and dates, so can get these too
-				int meetingId = Integer.parseInt(lineToArray[0]);
-				newMeetingId++;
-				int meetingYear = Integer.parseInt(lineToArray[1]);
-				int meetingMonth = Integer.parseInt(lineToArray[2]);
-				int meetingDay = Integer.parseInt(lineToArray[3]);
-				Calendar meetingDate = new GregorianCalendar(meetingYear,meetingMonth,meetingDay);
-
-				if (lineToArray.length == 6){
-					//if the line is of length 6 (5 strings + EOF) then it's a past meeting
-					String meetingNotes = lineToArray[4];
-					PastMeeting pm = new PastMeetingImpl(meetingId,thisMeetingContacts,meetingDate,meetingNotes);
-					pastMeetingList.add(pm);
-				} else {
-					//otherwise it's a future meeting
-					Meeting fm = new MeetingImpl(meetingId,thisMeetingContacts,meetingDate);
-					futureMeetingList.add(fm);
-				}
-			}
-
-		}
-
 
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
@@ -82,17 +42,6 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 	}
 
-
-	/**
-	 * Constructor that takes a writer for testing purposes
-	 * @param writer the writer to be used in this program - I use StringWriter for JUnit testing
-	 */
-	public ContactManagerImpl(Writer writer, String inputString) throws IOException {
-		this();
-		cmWriter = writer;
-		cmReader = new StringReader(inputString);
-
-	}
 	/**
 	* Add a new meeting to be held in the future.
 	* @param contacts a list of contacts that will participate in the meeting
