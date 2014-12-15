@@ -20,13 +20,15 @@ public class ContactManagerImpl implements ContactManager {
 	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
-	private Writer thisWriter;
+	private Writer cmWriter;
+	private Reader cmReader;
 	private File contactsFile;
 
 
 	public ContactManagerImpl() throws IOException{
 		contactsFile = new File("contacts.txt");
-		thisWriter = new FileWriter(contactsFile);
+		cmWriter = new FileWriter(contactsFile);
+		cmReader = new FileReader(contactsFile);
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
@@ -44,9 +46,10 @@ public class ContactManagerImpl implements ContactManager {
 	 * Constructor that takes a writer for testing purposes
 	 * @param writer the writer to be used in this program - I use StringWriter for JUnit testing
 	 */
-	public ContactManagerImpl(Writer writer) throws IOException {
+	public ContactManagerImpl(Writer writer, String inputString) throws IOException {
 		this();
-		thisWriter = writer;
+		cmWriter = writer;
+		cmReader = new StringReader(inputString);
 
 	}
 	/**
@@ -65,8 +68,8 @@ public class ContactManagerImpl implements ContactManager {
 		futureMeetingList.add(fm);
 
 		try {
-			thisWriter.write(newMeetingId + "," + dateToString(date) + "," + contactsToString(contacts)+"\n");
-			thisWriter.flush();
+			cmWriter.write(newMeetingId + "," + dateToString(date) + "," + contactsToString(contacts) + "\n");
+			cmWriter.flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
@@ -221,8 +224,8 @@ public class ContactManagerImpl implements ContactManager {
 		pastMeetingList.add(pm);
 
 		try {
-			thisWriter.write(newMeetingId+","+dateToString(date)+","+text+","+contactsToString(contacts)+"\n");
-			thisWriter.flush();
+			cmWriter.write(newMeetingId + "," + dateToString(date) + "," + text + "," + contactsToString(contacts) + "\n");
+			cmWriter.flush();
 		}catch (IOException ex){
 			ex.printStackTrace();
 		}
@@ -276,8 +279,8 @@ public class ContactManagerImpl implements ContactManager {
 		contactList.add(newContact); //add it to the internal contact list
 
 		try {
-			thisWriter.write(newContactId+","+name+","+notes+"\n");	//write the data
-			thisWriter.flush();
+			cmWriter.write(newContactId + "," + name + "," + notes + "\n");	//write the data
+			cmWriter.flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
@@ -327,7 +330,7 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public void flush() {
 		try {
-			thisWriter.close();
+			cmWriter.close();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
