@@ -291,7 +291,6 @@ public class ContactManagerImpl implements ContactManager {
 	public Set<Contact> getContacts(int... ids) {
 		Set<Contact> result = new HashSet<Contact>();
 		for (int thisId: ids) {
-			int contactsFound=0;	//flag to indicate whether matching contacts have been found
 			contactList.stream().filter(c->c.getId() == thisId).forEach(result::add);
 			if (result.isEmpty()){
 				throw new IllegalArgumentException(); 	//if no contacts with that ID are found
