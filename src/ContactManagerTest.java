@@ -21,8 +21,8 @@ public class ContactManagerTest {
 		contacts.add(alan);
 		sarah = new ContactImpl(2, "Sarah", "horrible");
 		contacts.add(sarah);
-		cm.addNewContact("Alan", "nice");
-		cm.addNewContact("Sarah", "horrible");
+		//cm.addNewContact("Alan", "nice");
+		//cm.addNewContact("Sarah", "horrible");
 
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);

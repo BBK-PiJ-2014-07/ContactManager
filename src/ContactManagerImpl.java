@@ -22,13 +22,8 @@ public class ContactManagerImpl implements ContactManager {
 	private ObjectOutputStream outputStream;
 
 
-	public ContactManagerImpl() throws IOException{
+	public ContactManagerImpl() throws IOException, ClassNotFoundException{
 		contactsFile = new File("contacts.txt");
-		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
-		newMeetingId = 1;
-		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
-		futureMeetingList = new ArrayList<Meeting>(); //need to populate this from contacts.txt
-		contactList = new HashSet<Contact>(); //need to populate this from contacts.txt
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
 		todaysDate.set(Calendar.MINUTE, 0);
@@ -36,12 +31,26 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
-		contactManagerObjects = new ArrayList<Collection>();
-		contactManagerObjects.add(futureMeetingList);
-		contactManagerObjects.add(pastMeetingList);
-		contactManagerObjects.add(contactList);
-		//There should be 3 objects written to file: the contact list, the past meeting list, and the future meeting list
 
+		if (contactsFile.exists() && inputStream.readObject()!= null){
+			//if the file exists and there's data in it, use that to repopulate the classes
+			contactManagerObjects = (ArrayList) inputStream.readObject();
+			futureMeetingList = (ArrayList) contactManagerObjects.get(0);
+			pastMeetingList = (ArrayList) contactManagerObjects.get(1);
+			contactList = (HashSet) contactManagerObjects.get(2);
+		} else {
+			// otherwise, make new empty objects
+			pastMeetingList = new ArrayList<PastMeeting>();
+			futureMeetingList = new ArrayList<Meeting>();
+			contactList = new HashSet<Contact>();
+			contactManagerObjects = new ArrayList<Collection>();
+			contactManagerObjects.add(futureMeetingList);
+			contactManagerObjects.add(pastMeetingList);
+			contactManagerObjects.add(contactList);
+		}
+		//There should be 3 objects written to file: the contact list, the past meeting list, and the future meeting list
+		newContactId = contactList.size()+1; //should be one larger than the size of the contacts list
+		newMeetingId = (futureMeetingList.size() + pastMeetingList.size()) + 1; //should be one larger than size of both meeting lists combined
 
 	}
 
@@ -60,7 +69,7 @@ public class ContactManagerImpl implements ContactManager {
 		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 		futureMeetingList.add(fm);
 		try {
-			outputStream.writeObject(futureMeetingList);
+			outputStream.writeObject(contactManagerObjects);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -218,7 +227,7 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
 		try{
-			outputStream.writeObject(pastMeetingList);
+			outputStream.writeObject(contactManagerObjects);
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
@@ -255,7 +264,7 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
 		pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
 		try {
-			outputStream.writeObject(pastMeetingList);
+			outputStream.writeObject(contactManagerObjects);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -275,7 +284,7 @@ public class ContactManagerImpl implements ContactManager {
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
 		try {
-			outputStream.writeObject(contactList);
+			outputStream.writeObject(contactManagerObjects);
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
