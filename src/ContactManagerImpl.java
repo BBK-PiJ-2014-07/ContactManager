@@ -58,7 +58,11 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 		futureMeetingList.add(fm);
-
+		try {
+			outputStream.writeObject(fm);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		newMeetingId++;
 
 		return fm.getId();
@@ -212,7 +216,11 @@ public class ContactManagerImpl implements ContactManager {
 
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
-
+		try{
+			outputStream.writeObject(pm);
+		}catch(IOException ex){
+			ex.printStackTrace();
+		}
 		newMeetingId++;
 	}
 
@@ -245,7 +253,11 @@ public class ContactManagerImpl implements ContactManager {
 		futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
 		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
 		pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
-		//write to file
+		try {
+			outputStream.writeObject(pm);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -261,7 +273,11 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
-
+		try {
+			outputStream.writeObject(newContact);
+		} catch (IOException ex){
+			ex.printStackTrace();
+		}
 
 		newContactId++; //increment newContactId for next contact
 	}
@@ -308,8 +324,12 @@ public class ContactManagerImpl implements ContactManager {
 	* closed and when/if the user requests it.
 	*/
 	public void flush() {
-		//TODO
-
+		try {
+			outputStream.close();
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
