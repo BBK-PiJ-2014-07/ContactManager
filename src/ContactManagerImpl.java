@@ -21,10 +21,12 @@ public class ContactManagerImpl implements ContactManager {
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
 	private Writer thisWriter;
+	private File contactsFile;
 
 
 	public ContactManagerImpl() throws IOException{
-		thisWriter = new FileWriter("contacts.txt");
+		contactsFile = new File("contacts.txt");
+		thisWriter = new FileWriter(contactsFile);
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
@@ -64,7 +66,7 @@ public class ContactManagerImpl implements ContactManager {
 
 		try {
 			thisWriter.write(newMeetingId + "," + dateToString(date) + "," + contactsToString(contacts)+"\n");
-			flush();
+			thisWriter.flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
@@ -220,6 +222,7 @@ public class ContactManagerImpl implements ContactManager {
 
 		try {
 			thisWriter.write(newMeetingId+","+dateToString(date)+","+text+","+contactsToString(contacts)+"\n");
+			thisWriter.flush();
 		}catch (IOException ex){
 			ex.printStackTrace();
 		}
@@ -274,7 +277,7 @@ public class ContactManagerImpl implements ContactManager {
 
 		try {
 			thisWriter.write(newContactId+","+name+","+notes+"\n");	//write the data
-			flush();
+			thisWriter.flush();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
@@ -324,7 +327,7 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public void flush() {
 		try {
-			thisWriter.flush();
+			thisWriter.close();
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
