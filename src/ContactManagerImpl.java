@@ -22,7 +22,7 @@ public class ContactManagerImpl implements ContactManager {
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
 	private Writer cmWriter;
-	private Reader cmReader;
+
 	private File contactsFile;
 
 

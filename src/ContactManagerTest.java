@@ -18,14 +18,14 @@ public class ContactManagerTest {
 	public void buildUp() throws IOException {
 		writer = new StringWriter();
 		String testingContent = "1,Alan,nice\n2,Sarah,horrible\n1,2013,4,3,boring meeting,1|2\n2,2015,2,5,1|2";
-		cm = new ContactManagerImpl(writer, testingContent);
+		cm = new ContactManagerImpl();
 		contacts = new HashSet<Contact>();
 		alan = new ContactImpl(1, "Alan", "nice");
 		contacts.add(alan);
 		sarah = new ContactImpl(2, "Sarah", "horrible");
 		contacts.add(sarah);
-		//cm.addNewContact("Alan", "nice");
-		//.addNewContact("Sarah", "horrible");
+		cm.addNewContact("Alan", "nice");
+		cm.addNewContact("Sarah", "horrible");
 
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
@@ -37,55 +37,6 @@ public class ContactManagerTest {
 
 	}
 
-	/**
-	 * Test that program initialises correctly and creates new contacts from existing data in file
-	 */
-	@Test
-	public void testInitialiseContacts(){
-		assertEquals(cm.getContacts(1), alan);
-	}
-	/**
-	 * Test that program initialises correctly and creates new contacts from existing data in file
-	 */
-	@Test
-	public void testInitialisePastMeeting(){
-		assertEquals(cm.getPastMeeting(1).getNotes(),"boring meeting");
-	}
-	/**
-	 * Test that program initialises correctly and creates new contacts from existing data in file
-	 */
-	@Test
-	public void testInitialiseFutureMeeting(){
-		assertEquals(cm.getFutureMeeting(1).getContacts(),contacts);
-	}
-	/**
-	 * Test that contact details are successfully written to a file
-	*/
-	@Test
-	public void testWriteContact() throws IOException {
-		String actualOutput = writer.toString();
-		assertTrue(actualOutput.contains("1,Alan,nice"));
-	}
-
-	/**
-	 * Test that future meeting details successfully written to file
-	 */
-	@Test
-	public void testWriteFutureMeeting() throws IOException {
-		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,2,3));
-		String actualOutput = writer.toString();
-		assertTrue(actualOutput.contains("1,2015,2,3,1|2"));
-	}
-
-	/**
-	 * Test that past meeting details successfully written to file
-	 */
-	@Test
-	public void testWritePastMeeting() throws IOException {
-		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,4), "notes");
-		String actualOutput = writer.toString();
-		assertTrue(actualOutput.contains("1,2013,5,4,notes,1|2"));
-	}
 	/**
 	 * Test that addFutureMeeting works as expected
 	 */
