@@ -22,6 +22,8 @@ public class ContactManagerImpl implements ContactManager {
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
 	private File contactsFile;
+	private ObjectInputStream inputStream;
+	private ObjectOutputStream outputStream;
 
 
 	public ContactManagerImpl() throws IOException{
@@ -36,6 +38,10 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MINUTE, 0);
 		todaysDate.set(Calendar.SECOND,0);
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
+		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
+		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
+
+
 	}
 
 	/**
