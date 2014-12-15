@@ -58,6 +58,8 @@ public class ContactManagerTest {
 	 */
 	@Test
 	public void testOutputFile() throws IOException {
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
 		List inputData = null;
 		try {
@@ -65,7 +67,14 @@ public class ContactManagerTest {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+
+		List<Meeting> futureMeetingList = (ArrayList) inputData.get(0);
+		System.out.println("Meeting" + futureMeetingList.get(0).getId());
+		List<PastMeeting> pastMeetingList = (ArrayList) inputData.get(1);
+		System.out.println("PastMeeting" + pastMeetingList.get(0).getId());
+
 		Set<Contact> inputContactSet = (HashSet) inputData.get(2);
+
 		assertEquals(inputContactSet.size(),contacts.size());
 	}
 	/**
