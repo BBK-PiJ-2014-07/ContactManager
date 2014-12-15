@@ -22,7 +22,7 @@ public class ContactManagerImpl implements ContactManager {
 	private ObjectOutputStream outputStream;
 
 
-	public ContactManagerImpl() throws IOException, ClassNotFoundException{
+	public ContactManagerImpl() throws IOException{
 		contactsFile = new File("contacts.txt");
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
@@ -32,21 +32,25 @@ public class ContactManagerImpl implements ContactManager {
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
 
-		if (contactsFile.exists() && inputStream.readObject()!= null){
-			//if the file exists and there's data in it, use that to repopulate the classes
-			contactManagerObjects = (ArrayList) inputStream.readObject();
-			futureMeetingList = (ArrayList) contactManagerObjects.get(0);
-			pastMeetingList = (ArrayList) contactManagerObjects.get(1);
-			contactList = (HashSet) contactManagerObjects.get(2);
-		} else {
-			// otherwise, make new empty objects
-			pastMeetingList = new ArrayList<PastMeeting>();
-			futureMeetingList = new ArrayList<Meeting>();
-			contactList = new HashSet<Contact>();
-			contactManagerObjects = new ArrayList<Collection>();
-			contactManagerObjects.add(futureMeetingList);
-			contactManagerObjects.add(pastMeetingList);
-			contactManagerObjects.add(contactList);
+		try {
+			if (contactsFile.exists() && inputStream.available() > 0) {
+				//if the file exists and there's data in it, use that to repopulate the classes
+				contactManagerObjects = (ArrayList) inputStream.readObject();
+				futureMeetingList = (ArrayList) contactManagerObjects.get(0);
+				pastMeetingList = (ArrayList) contactManagerObjects.get(1);
+				contactList = (HashSet) contactManagerObjects.get(2);
+			} else {
+				// otherwise, make new empty objects
+				pastMeetingList = new ArrayList<PastMeeting>();
+				futureMeetingList = new ArrayList<Meeting>();
+				contactList = new HashSet<Contact>();
+				contactManagerObjects = new ArrayList<Collection>();
+				contactManagerObjects.add(futureMeetingList);
+				contactManagerObjects.add(pastMeetingList);
+				contactManagerObjects.add(contactList);
+			}
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
 		}
 		//There should be 3 objects written to file: the contact list, the past meeting list, and the future meeting list
 		newContactId = contactList.size()+1; //should be one larger than the size of the contacts list

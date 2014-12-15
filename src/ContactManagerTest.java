@@ -21,8 +21,8 @@ public class ContactManagerTest {
 		contacts.add(alan);
 		sarah = new ContactImpl(2, "Sarah", "horrible");
 		contacts.add(sarah);
-		//cm.addNewContact("Alan", "nice");
-		//cm.addNewContact("Sarah", "horrible");
+		cm.addNewContact("Alan", "nice");
+		cm.addNewContact("Sarah", "horrible");
 
 		todaysDate = new GregorianCalendar();
 		todaysDate.set(Calendar.HOUR_OF_DAY,0);
@@ -51,6 +51,22 @@ public class ContactManagerTest {
 			cnfex.printStackTrace();
 		}
 		assertEquals(readCont,alan);
+	}
+
+	/**
+	 * Test that output file is correct
+	 */
+	@Test
+	public void testOutputFile() throws IOException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
+		List inputData = null;
+		try {
+			inputData = (ArrayList) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Set<Contact> inputContactSet = (HashSet) inputData.get(2);
+		assertEquals(inputContactSet.size(),contacts.size());
 	}
 	/**
 	 * Test that addFutureMeeting works as expected
