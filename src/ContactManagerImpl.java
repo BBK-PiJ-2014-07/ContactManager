@@ -20,13 +20,9 @@ public class ContactManagerImpl implements ContactManager {
 	private List<Meeting> futureMeetingList;
 	private Writer thisWriter;
 
-	public ContactManagerImpl() throws IOException {
-		this(new FileWriter("contacts.txt"));
 
-	}
-
-	public ContactManagerImpl(Writer w){
-		thisWriter = w;
+	public ContactManagerImpl() throws IOException{
+		thisWriter = new FileWriter("contacts.txt");
 		newContactId = 1; //find the highest ID in contacts.txt and instantiate it to that
 		newMeetingId = 1;
 		pastMeetingList = new ArrayList<PastMeeting>(); //populate from contacts.txt
@@ -39,6 +35,16 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 	}
 
+
+	/**
+	 * Constructor that takes a writer for debugging purposes
+	 * @param w
+	 */
+	public ContactManagerImpl(Writer w) throws IOException {
+		this();
+		thisWriter = w;
+
+	}
 	/**
 	* Add a new meeting to be held in the future.
 	*
@@ -332,7 +338,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	/**
 	 * Converts a Calendar to a string.
-	 * @param date
+	 * @param date the Calendar to be converted
 	 * @return a String representation of the year, the month and the day separated by commas
 	 */
 	public String dateToString(Calendar date){
@@ -341,12 +347,14 @@ public class ContactManagerImpl implements ContactManager {
 
 	/**
 	 * Converts a contact set to a string.
-	 * @param contacts
+	 * @param contacts the Set of contacts to be converted
 	 * @return a String representation of the contacts separated by pipes
 	 */
 	public String contactsToString(Set<Contact> contacts){
 		StringBuilder contactString = new StringBuilder();
-		for (Contact c: contacts) contactString.append(c.getId() + "|"); 	//add IDs separated by poles
+		for (Contact c: contacts) {
+			contactString.append(c.getId()).append("|"); 	//add IDs separated by poles
+		}
 		contactString.deleteCharAt(contactString.length()-1); 	//shave off the last pole
 		return String.valueOf(contactString);
 	}

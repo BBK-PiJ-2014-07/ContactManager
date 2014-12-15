@@ -12,6 +12,7 @@ public class ContactManagerTest {
 	private Contact alan;
 	private Contact sarah;
 	private StringWriter writer;
+	private Calendar todaysDate;
 
 
 	@Before
@@ -25,6 +26,12 @@ public class ContactManagerTest {
 		contacts.add(sarah);
 		cm.addNewContact("Alan", "nice");
 		cm.addNewContact("Sarah", "horrible");
+		todaysDate = new GregorianCalendar();
+		todaysDate.set(Calendar.HOUR_OF_DAY,0);
+		todaysDate.set(Calendar.MINUTE, 0);
+		todaysDate.set(Calendar.SECOND, 0);
+		todaysDate.set(Calendar.MILLISECOND, 0); //need to set these fields to 0 to allow successful date comparison
+
 
 
 	}
@@ -152,14 +159,14 @@ public class ContactManagerTest {
 	@Test
 	public void testAddMeetingNotesConvertsToPastMeeting() {
 		PastMeeting examplePastMeeting = new PastMeetingImpl(3, contacts, new GregorianCalendar(2013,2,5), "test");
-		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
+		cm.addFutureMeeting(contacts, todaysDate);
 		cm.addMeetingNotes(1, "now a past meeting");
 		assertTrue(cm.getMeeting(1).getClass()==examplePastMeeting.getClass());
 	}
 
 	@Test
 	public void testAddMeetingNotesActuallyAddsMeetingNotes(){
-		cm.addFutureMeeting(contacts, new GregorianCalendar(2014, 11, 11));
+		cm.addFutureMeeting(contacts, todaysDate);
 		cm.addMeetingNotes(1, "now a past meeting");
 		assertEquals(cm.getPastMeeting(1).getNotes(),"now a past meeting");
 	}
@@ -170,7 +177,7 @@ public class ContactManagerTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddMeetingNotesWithIllegalMeeting(){
-		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
+		cm.addFutureMeeting(contacts, todaysDate);
 		cm.addMeetingNotes(12,"illegal meeting");
 	}
 
@@ -188,7 +195,7 @@ public class ContactManagerTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testAddMeetingNotesWithNullNotes(){
-		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,11));
+		cm.addFutureMeeting(contacts, todaysDate);
 		cm.addMeetingNotes(1,null);
 	}
 	/**
