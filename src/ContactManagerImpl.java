@@ -38,14 +38,17 @@ public class ContactManagerImpl implements ContactManager {
 			String[] lineToArray = thisLine.split(",");	//split each line of the file by commas
 			if (lineToArray.length==3){
 				//if the line is of length 3 (3 strings + EOF) then it's a contact
-				//Instantiate contact
+				int contactId = Integer.parseInt(lineToArray[0]);
+				Contact c = new ContactImpl(contactId, lineToArray[1], lineToArray[2]);
+				contactList.add(c);
+				newContactId++;
 			} else {
 				//Otherwise it must be a meeting - the last String in the array will be the contacts
 				// Both kinds of meetings have contact sets so need to get these first
 				String[] contacts = lineToArray[lineToArray.length-1].split("|");
 				int[] contIds = new int[contacts.length];
-				for (String stringId: contacts){
-					contIds[i] = Integer.parseInt(stringId);
+				for (int i = 0; i< contacts.length; i++){
+					contIds[i] = Integer.parseInt(contacts[i]);
 				}
 				Set<Contact> thisMeetingContacts = getContacts(contIds);
 
