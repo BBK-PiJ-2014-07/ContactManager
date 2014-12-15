@@ -306,26 +306,4 @@ public class ContactManagerImpl implements ContactManager {
 
 	}
 
-	/**
-	 * Converts a Calendar to a string.
-	 * @param date the Calendar to be converted
-	 * @return a String representation of the year, the month and the day separated by commas
-	 */
-	public String dateToString(Calendar date){
-		return date.get(Calendar.YEAR)+","+date.get(Calendar.MONTH)+","+date.get(Calendar.DAY_OF_MONTH);
-	}
-
-	/**
-	 * Converts a contact set to a string.
-	 * @param contacts the Set of contacts to be converted
-	 * @return a String representation of the contacts separated by pipes
-	 */
-	public String contactsToString(Set<Contact> contacts){
-		StringBuilder contactString = new StringBuilder();
-		for (Contact c: contacts) {
-			contactString.append(c.getId()).append("|"); 	//add IDs separated by poles
-		}
-		contactString.deleteCharAt(contactString.length()-1); 	//shave off the last pole
-		return String.valueOf(contactString);
-	}
 }
