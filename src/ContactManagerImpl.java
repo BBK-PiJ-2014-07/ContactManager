@@ -1,10 +1,5 @@
 import java.nio.file.Files;
-import java.util.List;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
+import java.util.*;
 import java.io.*;
 
 /**
@@ -22,6 +17,7 @@ public class ContactManagerImpl implements ContactManager {
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
 	private File contactsFile;
+	private List<Collection> contactManagerObjects;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 
@@ -40,27 +36,12 @@ public class ContactManagerImpl implements ContactManager {
 		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
-		Object o = null;
-		try {
-			while ((o = inputStream.readObject()) != null){
-                if (o instanceof Contact){
-					Contact newCont = (Contact) o;
-					contactList.add(newCont);
-					newContactId++;
-				} else {
-					if (o instanceof PastMeeting){
-						PastMeeting pm = (PastMeeting) o;
-						pastMeetingList.add(pm);
-					} else {
-						Meeting fm = (Meeting) o;
-						futureMeetingList.add(fm);
-					}
-					newMeetingId++;
-				}
-            }
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		contactManagerObjects = new ArrayList<Collection>();
+		contactManagerObjects.add(futureMeetingList);
+		contactManagerObjects.add(pastMeetingList);
+		contactManagerObjects.add(contactList);
+		//There should be 3 objects written to file: the contact list, the past meeting list, and the future meeting list
+
 
 	}
 
@@ -79,7 +60,7 @@ public class ContactManagerImpl implements ContactManager {
 		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 		futureMeetingList.add(fm);
 		try {
-			outputStream.writeObject(fm);
+			outputStream.writeObject(futureMeetingList);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -237,7 +218,7 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
 		try{
-			outputStream.writeObject(pm);
+			outputStream.writeObject(pastMeetingList);
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
@@ -274,7 +255,7 @@ public class ContactManagerImpl implements ContactManager {
 		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
 		pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
 		try {
-			outputStream.writeObject(pm);
+			outputStream.writeObject(pastMeetingList);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -294,7 +275,7 @@ public class ContactManagerImpl implements ContactManager {
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
 		try {
-			outputStream.writeObject(newContact);
+			outputStream.writeObject(contactList);
 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
