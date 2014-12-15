@@ -37,12 +37,12 @@ public class ContactManagerImpl implements ContactManager {
 
 
 	/**
-	 * Constructor that takes a writer for debugging purposes
-	 * @param w
+	 * Constructor that takes a writer for testing purposes
+	 * @param w the writer to be used in this program - use StringWriter for JUnit testing
 	 */
-	public ContactManagerImpl(Writer w) throws IOException {
+	public ContactManagerImpl(Writer writer) throws IOException {
 		this();
-		thisWriter = w;
+		thisWriter = writer;
 
 	}
 	/**
