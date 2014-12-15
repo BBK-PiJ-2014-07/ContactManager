@@ -349,24 +349,5 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
 		assertNull(cm.getPastMeeting(88));
 	}
-
-	/**
-	 * Test that dateToString() works correctly
-	 */
-	@Test
-	public void testDateToString(){
-		Calendar myCal = new GregorianCalendar(2015,5,5);
-		String testString = cm.dateToString(myCal);
-		assertEquals(testString,"2015,5,5");
-	}
-
-	/**
-	 * Test that contactsToString() works correctly
-	 */
-	@Test
-	public void testContactsToString(){
-		String testString = cm.contactsToString(contacts);
-		assertEquals(testString, "1|2");
-	}
 }
 
