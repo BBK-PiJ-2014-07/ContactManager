@@ -185,6 +185,7 @@ public class ContactManagerImpl implements ContactManager {
 		} else {
 			futureMeetingList.stream().filter(m->m.getDate().compareTo(date)==0).forEach(result::add);
 		}
+		result.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
 		return result;
 	}
 
@@ -206,6 +207,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		List<PastMeeting> result = new ArrayList<PastMeeting>();
 		pastMeetingList.stream().filter(pm->pm.getContacts().contains(contact)).forEach(result::add);
+		result.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
 		return result;
 	}
 
