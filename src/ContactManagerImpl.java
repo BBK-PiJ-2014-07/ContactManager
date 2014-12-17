@@ -256,19 +256,29 @@ public class ContactManagerImpl implements ContactManager {
 	* @throws NullPointerException if the notes are null
 	*/
 	public void addMeetingNotes(int id, String text) {
-		if (futureMeetingList.stream().noneMatch(m -> m.getId() == id)){
-			throw new IllegalArgumentException();
-		}
-		Meeting thisMeeting = getFutureMeeting(id);
-		if (thisMeeting.getDate().after(todaysDate)){
-			throw new IllegalStateException();
-		}
 		if (text == null) {
 			throw new NullPointerException();
 		}
-		futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
-		PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
-		pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
+		Meeting thisMeeting = null;
+		if (futureMeetingList.stream().anyMatch(m->m.getId()==id)){
+			//TODO;
+			futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
+			PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
+			pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
+
+		} else if (pastMeetingList.stream().anyMatch(m->m.getId()==id)){
+			//TODO
+			PastMeeting newPm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), ((PastMeeting) thisMeeting).getNotes());
+
+
+		} else {
+			throw new IllegalArgumentException();
+		}
+
+		if (thisMeeting.getDate().after(todaysDate)){
+			throw new IllegalStateException();
+		}
+
 		try {
 			outputStream.writeObject(contactManagerObjects);
 		} catch (IOException e) {
