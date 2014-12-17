@@ -25,10 +25,6 @@ public class ContactManagerTest {
 		cm.addNewContact("Sarah", "horrible");
 
 		todaysDate = new GregorianCalendar();
-		todaysDate.set(Calendar.HOUR_OF_DAY,0);
-		todaysDate.set(Calendar.MINUTE, 0);
-		todaysDate.set(Calendar.SECOND, 0);
-		todaysDate.set(Calendar.MILLISECOND, 0); //need to set these fields to 0 to allow successful date comparison
 
 
 
@@ -77,6 +73,25 @@ public class ContactManagerTest {
 
 		assertEquals(inputContactSet.size(),contacts.size());
 	}
+
+	/**
+	 * Test that ContactManager is actually writing something to file, and find out what it is
+	 */
+	@Test
+	public void testWhatsWrittenToFile() throws IOException{
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
+		List inputData = null;
+		try {
+			inputData = (ArrayList) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		assertTrue(inputData.get(0).getClass().equals(inputData.getClass()));
+	}
+
 	/**
 	 * Test that addFutureMeeting works as expected
 	 */
@@ -157,20 +172,21 @@ public class ContactManagerTest {
 	/**
 	 * Test normal functionality of addMeetingNotes()
 	 */
-
+	//TODO
+/*
 	@Test
 	public void testAddMeetingNotesConvertsToPastMeeting() {
 		PastMeeting examplePastMeeting = new PastMeetingImpl(3, contacts, new GregorianCalendar(2013,2,5), "test");
-		cm.addFutureMeeting(contacts, todaysDate);
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2014,11,17,16,32));
 		cm.addMeetingNotes(1, "now a past meeting");
 		assertTrue(cm.getMeeting(1).getClass()==examplePastMeeting.getClass());
 	}
-
+*/
 	@Test
 	public void testAddMeetingNotesActuallyAddsMeetingNotes(){
-		cm.addFutureMeeting(contacts, todaysDate);
-		cm.addMeetingNotes(1, "now a past meeting");
-		assertEquals(cm.getPastMeeting(1).getNotes(),"now a past meeting");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013, 4, 5), "board meeting");
+		cm.addMeetingNotes(1, "rescheduled");
+		assertEquals(cm.getPastMeeting(1).getNotes(),"board meeting, rescheduled");
 	}
 
 	/**
@@ -197,7 +213,7 @@ public class ContactManagerTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testAddMeetingNotesWithNullNotes(){
-		cm.addFutureMeeting(contacts, todaysDate);
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013, 4, 5), "board meeting");
 		cm.addMeetingNotes(1,null);
 	}
 	/**
