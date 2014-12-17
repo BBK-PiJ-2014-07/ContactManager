@@ -1,5 +1,10 @@
-import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.List;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Collection;
 import java.io.*;
 
 /**
@@ -16,14 +21,13 @@ public class ContactManagerImpl implements ContactManager {
 	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
-	private File contactsFile;
 	private List<Collection> contactManagerObjects;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 
 
 	public ContactManagerImpl() throws IOException{
-		contactsFile = new File("contacts.txt");
+		File contactsFile = new File("contacts.txt");
 		todaysDate = new GregorianCalendar(); //initialise a new calendar to today's date for comparison
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
