@@ -292,15 +292,15 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that getFutureMeetingList(Contact contact) works with a past meeting)
+	 * Test that getFutureMeetingList(Date date) works with a past meeting)
 	 *
 	 */
 	@Test
-	public void testGetFutureMeetingListPastMeetingsContact(){
+	public void testGetFutureMeetingListPastMeetingsDate(){
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014,5,3), "past meeting");
-		List<Meeting> fml = cm.getFutureMeetingList(alan);
-		assertTrue(fml.size()==2);
+		List<Meeting> fml = cm.getFutureMeetingList(new GregorianCalendar(2014,5,3));
+		assertTrue(fml.size()==1);
 	}
 
 	/**
