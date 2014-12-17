@@ -24,11 +24,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	public ContactManagerImpl() throws IOException{
 		contactsFile = new File("contacts.txt");
-		todaysDate = new GregorianCalendar();
-		todaysDate.set(Calendar.HOUR_OF_DAY,0);
-		todaysDate.set(Calendar.MINUTE, 0);
-		todaysDate.set(Calendar.SECOND,0);
-		todaysDate.set(Calendar.MILLISECOND,0); //need to set these fields to 0 to allow successful date comparison
+		todaysDate = new GregorianCalendar(); //initialise a new calendar to today's date for comparison
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
 
