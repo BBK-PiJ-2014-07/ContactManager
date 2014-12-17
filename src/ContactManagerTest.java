@@ -308,12 +308,11 @@ public class ContactManagerTest {
 	 */
 	@Test
 	public void testChronologicalSort(){
-		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014,8,7), "third");
-		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014, 5, 3), "first");
-		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014,7,3), "second");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 3, 4, 14, 30));
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 3, 4, 16, 30));
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 3, 4, 8, 30));
 		List<Meeting> fml = cm.getFutureMeetingList(alan);
-		PastMeeting pm = (PastMeeting) fml.get(1);
-		assertEquals(pm.getNotes(),"second");
+		assertEquals(fml.get(1).getId(),1);
 
 
 	}
