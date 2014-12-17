@@ -52,7 +52,6 @@ public class ContactManagerImpl implements ContactManager {
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
 		}
-		//There should be 3 objects written to file: the contact list, the past meeting list, and the future meeting list
 		newContactId = contactList.size()+1; //should be one larger than the size of the contacts list
 		newMeetingId = (futureMeetingList.size() + pastMeetingList.size()) + 1; //should be one larger than size of both meeting lists combined
 
@@ -164,6 +163,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		List<Meeting> result = new ArrayList<Meeting>();
 		futureMeetingList.stream().filter(m -> m.getContacts().contains(contact)).forEach(result::add);
+		result.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
 		return result;
 	}
 	
