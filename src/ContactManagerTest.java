@@ -292,6 +292,33 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that getFutureMeetingList(Contact contact) works with a past meeting)
+	 *
+	 */
+	@Test
+	public void testGetFutureMeetingListPastMeetingsContact(){
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014,5,3), "past meeting");
+		List<Meeting> fml = cm.getFutureMeetingList(alan);
+		assertTrue(fml.size()==2);
+	}
+
+	/**
+	 * Test that chronological sort works
+	 */
+	@Test
+	public void testChronologicalSort(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014,8,7), "third");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014, 5, 3), "first");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2014,7,3), "second");
+		List<Meeting> fml = cm.getFutureMeetingList(alan);
+		PastMeeting pm = (PastMeeting) fml.get(1);
+		assertEquals(pm.getNotes(),"second");
+
+
+	}
+
+	/**
 	 * Test that getFutureMeetingList(Contact contact) throws IllegalArgumentException
 	 * if contact does not exist
 	 *
