@@ -170,7 +170,7 @@ public class ContactManagerTest {
 	*/
 
 	/**
-	 * Test normal functionality of addMeetingNotes()
+	 * Test normal functionality of addMeetingNotes() - this is causing problems
 	 */
 	//TODO
 /*

@@ -261,15 +261,16 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		Meeting thisMeeting = null;
 		if (futureMeetingList.stream().anyMatch(m->m.getId()==id)){
-			//TODO;
+			thisMeeting = futureMeetingList.stream().filter(m->m.getId()==id).findFirst().get();
 			futureMeetingList.removeIf(m -> m.getId() == id);	//look through futureMeetingList for this meeting and remove it
 			PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
 			pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
 
 		} else if (pastMeetingList.stream().anyMatch(m->m.getId()==id)){
-			//TODO
-			PastMeeting newPm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), ((PastMeeting) thisMeeting).getNotes());
-
+			thisMeeting = pastMeetingList.stream().filter(m->m.getId()==id).findFirst().get();
+			pastMeetingList.removeIf(m->m.getId() == id);
+			PastMeeting newPm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), ((PastMeeting) thisMeeting).getNotes() + ", "+text);
+			pastMeetingList.add(newPm);
 
 		} else {
 			throw new IllegalArgumentException();
