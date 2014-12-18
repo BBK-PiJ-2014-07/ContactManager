@@ -53,9 +53,10 @@ public class ContactManagerTest {
 	 * Test that output file is correct
 	 */
 	@Test
-	public void testOutputFile() throws IOException {
+	public void testOutputContacts() throws IOException {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
+		cm.flush();
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
 		List inputData = null;
 		try {
@@ -63,15 +64,17 @@ public class ContactManagerTest {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		inputData.stream().forEach(System.out::print);
 		List<Meeting> futureMeetingList = (ArrayList) inputData.get(0);
-		System.out.println("Meeting" + futureMeetingList.get(0).getId());
+		System.out.println(futureMeetingList.size());
+		//System.out.println("Meeting" + futureMeetingList.get(0).getId());
 		List<PastMeeting> pastMeetingList = (ArrayList) inputData.get(1);
-		System.out.println("PastMeeting" + pastMeetingList.get(0).getId());
+		System.out.println(pastMeetingList.size());
+		//System.out.println("PastMeeting" + pastMeetingList.get(0).getId());
 
-		Set<Contact> inputContactSet = (HashSet) inputData.get(2);
+		List<Contact> inputContactList = (ArrayList) inputData.get(2);
 
-		assertEquals(inputContactSet.size(),contacts.size());
+		assertEquals(inputContactList.size(), contacts.size());
 	}
 
 	/**
@@ -96,7 +99,7 @@ public class ContactManagerTest {
 	 * Test that the List written to file contains the right objects
 	 */
 	@Test
-	public void testListWrittenToFile() throws IOException {
+	public void testSizeOfListInFile() throws IOException {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
@@ -106,7 +109,7 @@ public class ContactManagerTest {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		assertEquals(3,inputData.size());
+		assertEquals(3, inputData.size());
 	}
 	/**
 	 * Test that addFutureMeeting works as expected

@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.List;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Collection;
 import java.io.*;
 
 /**
@@ -16,12 +15,12 @@ import java.io.*;
 public class ContactManagerImpl implements ContactManager {
 
 	private Calendar todaysDate;
-	private Set<Contact> contactList;
+	private List<Contact> contactList;
 	private int newContactId;
 	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
-	private List<Collection> contactManagerObjects;
+	private List<List<?>> contactManagerObjects; //the List that holds the other lists, for easy I/O
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 
@@ -32,26 +31,27 @@ public class ContactManagerImpl implements ContactManager {
 		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
 		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
 
-		try {
+		/*try {
 			if (contactsFile.exists() && inputStream.available() > 0) {
 				//if the file exists and there's data in it, use that to repopulate the classes
 				contactManagerObjects = (ArrayList) inputStream.readObject();
 				futureMeetingList = (ArrayList) contactManagerObjects.get(0);
 				pastMeetingList = (ArrayList) contactManagerObjects.get(1);
 				contactList = (HashSet) contactManagerObjects.get(2);
-			} else {
+			} else {*/
 				// otherwise, make new empty objects
 				pastMeetingList = new ArrayList<PastMeeting>();
 				futureMeetingList = new ArrayList<Meeting>();
-				contactList = new HashSet<Contact>();
-				contactManagerObjects = new ArrayList<Collection>();
+				contactList = new ArrayList<Contact>();
+				contactManagerObjects = new ArrayList<List<?>>();
 				contactManagerObjects.add(futureMeetingList);
 				contactManagerObjects.add(pastMeetingList);
 				contactManagerObjects.add(contactList);
-			}
-		} catch (ClassNotFoundException ex) {
+
+			//}
+		/*} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-		}
+		}*/
 		newContactId = contactList.size()+1; //should be one larger than the size of the contacts list
 		newMeetingId = (futureMeetingList.size() + pastMeetingList.size()) + 1; //should be one larger than size of both meeting lists combined
 
@@ -302,7 +302,7 @@ public class ContactManagerImpl implements ContactManager {
 		contactList.add(newContact); //add it to the internal contact list
 		try {
 			outputStream.writeObject(contactManagerObjects);
-		} catch (IOException ex){
+ 		} catch (IOException ex){
 			ex.printStackTrace();
 		}
 
