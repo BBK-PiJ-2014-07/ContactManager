@@ -75,10 +75,10 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that ContactManager is actually writing something to file, and find out what it is
+	 * Test that ContactManager is actually writing something to file, and check it's the right class
 	 */
 	@Test
-	public void testWhatsWrittenToFile() throws IOException{
+	public void testClassOfObjectWrittenToFile() throws IOException{
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
@@ -89,9 +89,25 @@ public class ContactManagerTest {
 			e.printStackTrace();
 		}
 
-		assertTrue(inputData.get(0).getClass().equals(inputData.getClass()));
+		assertTrue(inputData.get(0).getClass().equals(inputData.getClass())); //check that the object is a List
 	}
 
+	/**
+	 * Test that the List written to file contains the right objects
+	 */
+	@Test
+	public void testListWrittenToFile() throws IOException {
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
+		List inputData = null;
+		try {
+			inputData = (ArrayList) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		assertEquals(3,inputData.size());
+	}
 	/**
 	 * Test that addFutureMeeting works as expected
 	 */
