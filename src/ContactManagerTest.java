@@ -119,6 +119,37 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that output file contains correct past meetings
+	 */
+	@Test
+	public void testOutputPastMeetings() throws IOException {
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting one");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,6,3), "meeting two");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,7,3), "meeting three");
+
+		cm.flush();
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
+		List inputData = null;
+		try {
+			inputData = (ArrayList) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ois.close();
+			} catch (IOException ex){
+				ex.printStackTrace();
+			}
+		}
+
+		List<PastMeeting> pastMeetingList = (ArrayList) inputData.get(1);
+
+		assertEquals(pastMeetingList.get(1).getNotes(), "meeting two");
+	}
+
+
+	/**
 	 * Test that ContactManager can actually read from an existing file
 	 */
 	@Test
