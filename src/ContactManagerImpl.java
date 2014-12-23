@@ -22,14 +22,17 @@ public class ContactManagerImpl implements ContactManager {
 	private List<Meeting> futureMeetingList;
 	private List<List<?>> contactManagerObjects; //the List that holds the other lists, for easy I/O
 	private ObjectInputStream inputStream;
-	private ObjectOutputStream outputStream;
+	private File contactsFile;
 
 
-	public ContactManagerImpl() throws IOException{
-		File contactsFile = new File("contacts.txt");
+	public ContactManagerImpl(){
+		contactsFile = new File("contacts.txt");
 		todaysDate = new GregorianCalendar(); //initialise a new calendar to today's date for comparison
-		outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
-		inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
+		try {
+			inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
+		} catch (IOException ex){
+			ex.printStackTrace();
+		}
 
 		/*try {
 			if (contactsFile.exists() && inputStream.available() > 0) {
@@ -72,7 +75,10 @@ public class ContactManagerImpl implements ContactManager {
 		FutureMeeting fm = new FutureMeetingImpl(newMeetingId, contacts, date);
 		futureMeetingList.add(fm);
 		try {
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
+			outputStream.reset();
 			outputStream.writeObject(contactManagerObjects);
+			outputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -232,10 +238,13 @@ public class ContactManagerImpl implements ContactManager {
 
 		PastMeeting pm = new PastMeetingImpl(newMeetingId,contacts, date, text);
 		pastMeetingList.add(pm);
-		try{
+		try {
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
+			outputStream.reset();
 			outputStream.writeObject(contactManagerObjects);
-		}catch(IOException ex){
-			ex.printStackTrace();
+			outputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		newMeetingId++;
 	}
@@ -281,7 +290,10 @@ public class ContactManagerImpl implements ContactManager {
 		}
 
 		try {
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
+			outputStream.reset();
 			outputStream.writeObject(contactManagerObjects);
+			outputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -301,9 +313,12 @@ public class ContactManagerImpl implements ContactManager {
 		Contact newContact = new ContactImpl(newContactId, name, notes); //instantiate contact with ID
 		contactList.add(newContact); //add it to the internal contact list
 		try {
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
+			outputStream.reset();
 			outputStream.writeObject(contactManagerObjects);
- 		} catch (IOException ex){
-			ex.printStackTrace();
+			outputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		newContactId++; //increment newContactId for next contact
@@ -352,7 +367,6 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public void flush() {
 		try {
-			outputStream.close();
 			inputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();

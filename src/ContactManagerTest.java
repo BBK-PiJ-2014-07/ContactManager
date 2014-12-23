@@ -63,6 +63,12 @@ public class ContactManagerTest {
 			inputData = (ArrayList) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				ois.close();
+			} catch (IOException ex){
+				ex.printStackTrace();
+			}
 		}
 		inputData.stream().forEach(System.out::print);
 		List<Meeting> futureMeetingList = (ArrayList) inputData.get(0);
