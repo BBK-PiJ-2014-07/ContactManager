@@ -150,12 +150,23 @@ public class ContactManagerTest {
 
 
 	/**
-	 * Test that ContactManager can actually read from an existing file
+	 * Test that ContactManager can actually read contacts from an existing file
 	 */
 	@Test
-	public void testCMExistingFile(){
+	public void testCMExistingFileContacts(){
 		ContactManager cm1 = new ContactManagerImpl();
+		cm1.flush();
 		assertTrue(cm1.getContacts("Alan").contains(alan));
+	}
+
+	/**
+	 * Test that ContactManager can actually read contacts from an existing file
+	 */
+	@Test
+	public void testCMExistingFileFutureMeeting(){
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		ContactManager cm1 = new ContactManagerImpl();
+		assertEquals(cm1.getFutureMeetingList(new GregorianCalendar(2015,3,2)).get(0).getId(),1);
 	}
 
 	/**
