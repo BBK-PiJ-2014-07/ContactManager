@@ -11,6 +11,8 @@ import java.io.*;
  * @author Sophie Koonin
  * @see ContactManager
  *
+ * Methods that add a new contact or meeting, or add notes to a meeting, write the list contactManagerObjects to file. This is then read when the
+ * program is opened anew, to reinstantiate the objects that were previously created.
  */
 public class ContactManagerImpl implements ContactManager {
 
@@ -20,7 +22,7 @@ public class ContactManagerImpl implements ContactManager {
 	private int newMeetingId;
 	private List<PastMeeting> pastMeetingList;
 	private List<Meeting> futureMeetingList;
-	private List<List<?>> contactManagerObjects; //the List that holds the other lists, for easy I/O
+	private List<List<?>> contactManagerObjects; //the List that holds the other lists, which is written to file
 	private ObjectInputStream inputStream;
 	private File contactsFile;
 
@@ -281,10 +283,9 @@ public class ContactManagerImpl implements ContactManager {
 			pastMeetingList.add(newPm);
 
 		} else {
+			//If meeting not found
 			throw new IllegalArgumentException();
 		}
-
-
 
 		try {
 			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(contactsFile));
