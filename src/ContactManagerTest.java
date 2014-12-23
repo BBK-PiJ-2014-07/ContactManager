@@ -50,6 +50,14 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that output file exists
+	 */
+	@Test
+	public void testOutputFileExists(){
+		File outputFile = new File("contacts.txt");
+		assertTrue(outputFile.exists());
+	}
+	/**
 	 * Test that output file is correct
 	 */
 	@Test
