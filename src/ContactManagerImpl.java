@@ -34,14 +34,14 @@ public class ContactManagerImpl implements ContactManager {
 			ex.printStackTrace();
 		}
 
-		/*try {
+		try {
 			if (contactsFile.exists() && inputStream.available() > 0) {
 				//if the file exists and there's data in it, use that to repopulate the classes
 				contactManagerObjects = (ArrayList) inputStream.readObject();
 				futureMeetingList = (ArrayList) contactManagerObjects.get(0);
 				pastMeetingList = (ArrayList) contactManagerObjects.get(1);
-				contactList = (HashSet) contactManagerObjects.get(2);
-			} else {*/
+				contactList = (ArrayList) contactManagerObjects.get(2);
+			} else {
 				// otherwise, make new empty objects
 				pastMeetingList = new ArrayList<PastMeeting>();
 				futureMeetingList = new ArrayList<Meeting>();
@@ -51,10 +51,10 @@ public class ContactManagerImpl implements ContactManager {
 				contactManagerObjects.add(pastMeetingList);
 				contactManagerObjects.add(contactList);
 
-			//}
-		/*} catch (ClassNotFoundException ex) {
+			}
+		} catch (ClassNotFoundException | IOException ex) {
 			ex.printStackTrace();
-		}*/
+		}
 		newContactId = contactList.size()+1; //should be one larger than the size of the contacts list
 		newMeetingId = (futureMeetingList.size() + pastMeetingList.size()) + 1; //should be one larger than size of both meeting lists combined
 
