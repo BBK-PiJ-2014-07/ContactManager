@@ -35,7 +35,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 
 		try {
-			if (contactsFile.exists() && inputStream.available() > 0) {
+			if (contactsFile.exists()) {
 				//if the file exists and there's data in it, use that to repopulate the classes
 				contactManagerObjects = (ArrayList) inputStream.readObject();
 				futureMeetingList = (ArrayList) contactManagerObjects.get(0);
