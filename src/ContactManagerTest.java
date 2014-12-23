@@ -79,7 +79,8 @@ public class ContactManagerTest {
 	 */
 	@Test
 	public void testCMExistingFile(){
-
+		ContactManager cm1 = new ContactManagerImpl();
+		assertTrue(cm1.getContacts("Alan").contains(alan));
 	}
 
 	/**
