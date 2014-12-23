@@ -160,7 +160,7 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that ContactManager can actually read contacts from an existing file
+	 * Test that ContactManager can actually read future meetings from an existing file
 	 */
 	@Test
 	public void testCMExistingFileFutureMeeting(){
@@ -168,6 +168,21 @@ public class ContactManagerTest {
 		ContactManager cm1 = new ContactManagerImpl();
 		assertEquals(cm1.getFutureMeetingList(new GregorianCalendar(2015,3,2)).get(0).getId(),1);
 	}
+
+	/**
+	 * Test that ContactManager can actually read past meetings from an existing file
+	 */
+	@Test
+	public void testCMExistingFilePastMeeting(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting one");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,6,3), "meeting two");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,7,3), "meeting three");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,2));
+		ContactManager cm1 = new ContactManagerImpl();
+		assertEquals(cm1.getPastMeeting(2).getNotes(), "meeting two");
+	}
+
+
 
 	/**
 	 * Test that ContactManager is actually writing something to file, and check it's the right class
