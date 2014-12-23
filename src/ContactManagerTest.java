@@ -26,8 +26,6 @@ public class ContactManagerTest {
 
 		todaysDate = new GregorianCalendar();
 
-
-
 	}
 
 	/**
@@ -43,8 +41,8 @@ public class ContactManagerTest {
 		Contact readCont = null;
 		try {
 			readCont = (Contact) objInput.readObject();
-		} catch (ClassNotFoundException cnfex){
-			cnfex.printStackTrace();
+		} catch (ClassNotFoundException ex){
+			ex.printStackTrace();
 		}
 		assertEquals(readCont,alan);
 	}
@@ -70,17 +68,18 @@ public class ContactManagerTest {
 				ex.printStackTrace();
 			}
 		}
-		inputData.stream().forEach(System.out::print);
-		List<Meeting> futureMeetingList = (ArrayList) inputData.get(0);
-		System.out.println(futureMeetingList.size());
-		//System.out.println("Meeting" + futureMeetingList.get(0).getId());
-		List<PastMeeting> pastMeetingList = (ArrayList) inputData.get(1);
-		System.out.println(pastMeetingList.size());
-		//System.out.println("PastMeeting" + pastMeetingList.get(0).getId());
 
 		List<Contact> inputContactList = (ArrayList) inputData.get(2);
 
 		assertEquals(inputContactList.size(), contacts.size());
+	}
+
+	/**
+	 * Test that ContactManager can actually read from an existing file
+	 */
+	@Test
+	public void testCMExistingFile(){
+
 	}
 
 	/**
@@ -459,5 +458,11 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 5, 5));
 		assertNull(cm.getPastMeeting(88));
 	}
+
+	@After
+	public void tearDown(){
+		cm.flush();
+	}
+
 }
 
