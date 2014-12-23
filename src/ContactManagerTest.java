@@ -3,6 +3,8 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class ContactManagerTest {
@@ -463,6 +465,11 @@ public class ContactManagerTest {
 	@After
 	public void tearDown(){
 		cm.flush();
+		try {
+			Files.delete(Paths.get("contacts.txt"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

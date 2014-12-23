@@ -29,13 +29,9 @@ public class ContactManagerImpl implements ContactManager {
 		contactsFile = new File("contacts.txt");
 		todaysDate = new GregorianCalendar(); //initialise a new calendar to today's date for comparison
 		try {
-			inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
-		} catch (IOException ex){
-			ex.printStackTrace();
-		}
-
-		try {
 			if (contactsFile.exists()) {
+				inputStream = new ObjectInputStream(new FileInputStream(contactsFile));
+
 				//if the file exists and there's data in it, use that to repopulate the classes
 				contactManagerObjects = (ArrayList) inputStream.readObject();
 				futureMeetingList = (ArrayList) contactManagerObjects.get(0);
@@ -367,7 +363,9 @@ public class ContactManagerImpl implements ContactManager {
 	*/
 	public void flush() {
 		try {
-			inputStream.close();
+			if (inputStream != null) {
+				inputStream.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
