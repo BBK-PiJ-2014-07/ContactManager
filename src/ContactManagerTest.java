@@ -7,8 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * Unit tests for ContactManagerImpl.
+ * @see ContactManager
+ * NB Running these tests will cause live contacts.txt to be deleted - contact information will be lost.
+ */
+
 public class ContactManagerTest {
-	private ContactManagerImpl cm; 		//not using interface as impl has more methods
+	private ContactManager cm;
 	private Set<Contact> contacts;
 	private Contact alan;
 	private Contact sarah;
@@ -58,7 +64,7 @@ public class ContactManagerTest {
 		assertTrue(outputFile.exists());
 	}
 	/**
-	 * Test that output file is correct
+	 * Test that output file contains correct contacts
 	 */
 	@Test
 	public void testOutputContacts() throws IOException {
@@ -81,7 +87,35 @@ public class ContactManagerTest {
 
 		List<Contact> inputContactList = (ArrayList) inputData.get(2);
 
-		assertEquals(inputContactList.size(), contacts.size());
+		assertEquals(inputContactList.get(0), alan);
+	}
+
+	/**
+	 * Test that output file contains correct future meetings
+	 */
+	@Test
+	public void testOutputFutureMeetings() throws IOException {
+		Calendar thisDate = new GregorianCalendar(2015,3,2);
+		cm.addFutureMeeting(contacts, thisDate);
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting");
+		cm.flush();
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("contacts.txt"));
+		List inputData = null;
+		try {
+			inputData = (ArrayList) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ois.close();
+			} catch (IOException ex){
+				ex.printStackTrace();
+			}
+		}
+
+		List<Meeting> futureMeetingList = (ArrayList) inputData.get(0);
+
+		assertTrue(futureMeetingList.get(0).getDate().compareTo(thisDate) == 0);
 	}
 
 	/**
