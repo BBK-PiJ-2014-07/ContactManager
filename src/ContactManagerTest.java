@@ -257,6 +257,14 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that getContacts(String) doesn't give anything if contact not found
+	 */
+	@Test
+	public void testGetContactsEmptyString(){
+		Set<Contact> getCont = cm.getContacts("");
+		assertTrue(getCont.isEmpty());
+	}
+	/**
 	 * Test that getContacts(int) works with single int argument
 	 */
 	@Test
