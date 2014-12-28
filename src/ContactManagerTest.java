@@ -442,6 +442,21 @@ public class ContactManagerTest {
 		List<Meeting> pastList = cm.getFutureMeetingList(myCal);
 		assertTrue(pastList.get(0).getDate().compareTo(myCal)==0);
 	}
+
+	/**
+	 * Test that getFutureMeetingList(Calendar date) sorts lists chronologically
+	 */
+	@Test
+	public void testGetFutureMeetingListChronologicalSort(){
+		Calendar myCal = new GregorianCalendar(2013,3,4);
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013, 3, 4,13,0), "meeting two");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,3,4,11,0), "meeting one");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,2,19,30), "meeting three");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,6));
+		List<Meeting> pastList = cm.getFutureMeetingList(myCal);
+		PastMeeting pm = (PastMeeting) pastList.get(0);
+		assertEquals(pm.getNotes(), "meeting one");
+	}
 	/**
 	 * Test that getFutureMeetingList(Contact contact) works as expected)
 	 *
