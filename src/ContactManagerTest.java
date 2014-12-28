@@ -203,7 +203,7 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that the List written to file contains the right objects
+	 * Test that the List written to file contains the right number of objects
 	 */
 	@Test
 	public void testSizeOfListInFile() throws IOException {
@@ -227,7 +227,7 @@ public class ContactManagerTest {
 		assertTrue(newFutureMeetingId == 1);
 	}
 
-	/**
+	/**filter(m -> m.getDate().get(1) - date.get(1) ==0).filter(m -> m.getDate().get(2) - date.get(2) ==0).filter(m -> m.getDate().get(5) - date.get(5)==0).
 	 * Test that addFutureMeeting() throws IllegalArgumentException
 	 * if date is in the past
 	 */
@@ -295,6 +295,10 @@ public class ContactManagerTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetContactsWithIllegalId(){
 		Set<Contact> getCont = cm.getContacts(12);
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetContactsWithIDZero(){
+		Set<Contact> getCont = cm.getContacts(0);
 	}
 
 	/**

@@ -261,6 +261,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (text == null) {
 			throw new NullPointerException();
 		}
+		//Look for the meeting in the future meeting list
 		if (futureMeetingList.stream().anyMatch(m->m.getId()==id)){
 			Meeting thisMeeting = futureMeetingList.stream().filter(m->m.getId()==id).findFirst().get();
 			//Check that date isn't in the future
@@ -271,6 +272,7 @@ public class ContactManagerImpl implements ContactManager {
 			PastMeeting pm = new PastMeetingImpl(id, thisMeeting.getContacts(), thisMeeting.getDate(), text);
 			pastMeetingList.add(pm); //Doing this manually rather than calling addPastMeeting to keep ID the same
 
+			//Look for the meeting in the past meeting list
 		} else if (pastMeetingList.stream().anyMatch(m->m.getId()==id)){
 			PastMeeting thisMeeting = pastMeetingList.stream().filter(m->m.getId()==id).findFirst().get();
 			pastMeetingList.removeIf(m->m.getId() == id);
