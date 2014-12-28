@@ -160,6 +160,21 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that ID numbers are successfully retained and updated
+	 */
+	@Test
+	public void testIDNumbersInputFile(){
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,3), "meeting one");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,6,3), "meeting two");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,7,3), "meeting three");
+		ContactManager cm1 = new ContactManagerImpl();
+		cm1.addNewPastMeeting(contacts, new GregorianCalendar(2012,4,5), "meeting four");
+		cm1.flush();
+		assertEquals(cm1.getPastMeeting(4).getNotes(),"meeting four");
+
+	}
+
+	/**
 	 * Test that ContactManager can actually read future meetings from an existing file
 	 */
 	@Test
@@ -368,6 +383,19 @@ public class ContactManagerTest {
 		cm.addNewContact("Buffy", "vampire slayer");
 		Set<Contact> getCont = cm.getContacts("Buffy");
 		assertFalse(getCont.isEmpty());
+	}
+
+	/**
+	 * Test that addNewContact throws null pointer exception with null name or notes
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testAddNewContactNullName(){
+		cm.addNewContact(null, "notes");
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testAddNewContactNullNotes(){
+		cm.addNewContact("Name", null);
 	}
 
 	/**
