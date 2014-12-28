@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * Unit tests for ContactManagerImpl.
  * @see ContactManager
- * NB Running these tests will cause live contacts.txt to be deleted - contact information will be lost.
  */
 
 public class ContactManagerTest {
@@ -20,7 +19,21 @@ public class ContactManagerTest {
 	private Contact sarah;
 	private Calendar todaysDate;
 
-
+	/**
+	 * Method to run once at start of tests to back up existing contacts.txt.
+	 * Contacts.txt is copied to contactsCOPY.txt, and deleted
+	 * When all tests are finished, file is copied back, and copy is deleted.
+	 */
+	@BeforeClass
+	public static void backupContactsTxt(){
+		try {
+			Files.copy(Paths.get("contacts.txt"),Paths.get("contactsCOPY.txt"));
+			Files.delete(Paths.get("contacts.txt"));
+			System.out.print("Before");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	@Before
 	public void buildUp() throws IOException {
 		cm = new ContactManagerImpl();
@@ -170,7 +183,7 @@ public class ContactManagerTest {
 		ContactManager cm1 = new ContactManagerImpl();
 		cm1.addNewPastMeeting(contacts, new GregorianCalendar(2012,4,5), "meeting four");
 		cm1.flush();
-		assertEquals(cm1.getPastMeeting(4).getNotes(),"meeting four");
+		assertEquals(cm1.getPastMeeting(4).getNotes(), "meeting four");
 
 	}
 
@@ -412,9 +425,18 @@ public class ContactManagerTest {
 	 * if any of its arguments are null
 	 */
 	@Test(expected= NullPointerException.class)
-	public void testNewPastMeetingNullArg(){
+	public void testNewPastMeetingNullNotes(){
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,6), null);
 	}
+	@Test(expected= NullPointerException.class)
+	public void testNewPastMeetingNullContacts(){
+		cm.addNewPastMeeting(null, new GregorianCalendar(2013,5,6), "notes");
+	}
+	@Test(expected= NullPointerException.class)
+	public void testNewPastMeetingNullDate(){
+		cm.addNewPastMeeting(contacts, null, "notes");
+	}
+
 
 	/**
 	 * Test to check that addNewPastMeeting() throws IllegalArgumentException
@@ -643,6 +665,19 @@ public class ContactManagerTest {
 			Files.delete(Paths.get("contacts.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method to be run at very end after all tests have completed, to restore original contacts.txt
+	 */
+	@AfterClass
+	public static void putBackContactsTxt(){
+		try {
+			Files.copy(Paths.get("contactsCOPY.txt"),Paths.get("contacts.txt"));
+			Files.delete(Paths.get("contactsCOPY.txt"));
+		} catch (IOException ex){
+			ex.printStackTrace();
 		}
 	}
 
