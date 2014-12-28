@@ -420,16 +420,28 @@ public class ContactManagerTest {
 	}
 
 	/**
-	 * Test that getFutureMeetingList(Calendar date) works as expected
+	 * Test that getFutureMeetingList(Calendar date) works as expected with a future date
 	 */
 	@Test
-	public void testGetFutureMeetingListDate(){
+	public void testGetFutureMeetingListFutureDate(){
 		Calendar myCal = new GregorianCalendar(2016,3,4);
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2016,3,4));
 		List<Meeting> fml = cm.getFutureMeetingList(myCal);
 		assertTrue(fml.get(0).getDate().compareTo(myCal)==0);
 	}
-
+	/**
+	 * Test that getFutureMeetingList(Calendar date) works as expected with a past date
+	 */
+	@Test
+	public void testGetFutureMeetingListPastDate(){
+		Calendar myCal = new GregorianCalendar(2013,3,4);
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013, 3, 4), "meeting one");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,3,4), "meeting two");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,2), "meeting three");
+		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,6));
+		List<Meeting> pastList = cm.getFutureMeetingList(myCal);
+		assertTrue(pastList.get(0).getDate().compareTo(myCal)==0);
+	}
 	/**
 	 * Test that getFutureMeetingList(Contact contact) works as expected)
 	 *
@@ -513,6 +525,8 @@ public class ContactManagerTest {
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015, 4, 5));
 		assertTrue(cm.getFutureMeeting(2).getDate().compareTo(myCal)==0);
 	}
+
+
 
 	/**
 	 * Test that getFutureMeeting(int) throws an IllegalArgumentException when given
