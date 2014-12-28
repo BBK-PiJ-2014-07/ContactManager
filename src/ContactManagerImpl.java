@@ -1,9 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.io.*;
 
 /**
@@ -185,9 +180,9 @@ public class ContactManagerImpl implements ContactManager {
 	public List<Meeting> getFutureMeetingList(Calendar date) {
 		List<Meeting> result = new ArrayList<Meeting>();
 		if (date.before(todaysDate)) {
-			pastMeetingList.stream().filter(m -> m.getDate().compareTo(date) == 0).forEach(result::add);
+			pastMeetingList.stream().filter(m -> m.getDate().get(1) - date.get(1) == 0).filter(m -> m.getDate().get(2) - date.get(2) ==0).filter(m -> m.getDate().get(5) - date.get(5)==0).forEach(result::add);
 		} else {
-			futureMeetingList.stream().filter(m->m.getDate().compareTo(date)==0).forEach(result::add);
+			futureMeetingList.stream().filter(m -> m.getDate().get(1) - date.get(1) ==0).filter(m -> m.getDate().get(2) - date.get(2) ==0).filter(m -> m.getDate().get(5) - date.get(5)==0).forEach(result::add);
 		}
 		result.sort((m1, m2) -> m1.getDate().compareTo(m2.getDate()));
 		return result;
@@ -372,5 +367,6 @@ public class ContactManagerImpl implements ContactManager {
 			e.printStackTrace();
 		}
 	}
+
 
 }
