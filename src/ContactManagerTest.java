@@ -672,7 +672,7 @@ public class ContactManagerTest {
 	 * Method to be run at very end after all tests have completed, to restore original contacts.txt
 	 */
 	@AfterClass
-	public static void putBackContactsTxt(){
+	public static void restoreContactsTxt(){
 		try {
 			Files.copy(Paths.get("contactsCOPY.txt"),Paths.get("contacts.txt"));
 			Files.delete(Paths.get("contactsCOPY.txt"));
