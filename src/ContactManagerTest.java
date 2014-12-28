@@ -264,6 +264,12 @@ public class ContactManagerTest {
 		Set<Contact> getCont = cm.getContacts("");
 		assertTrue(getCont.isEmpty());
 	}
+
+	@Test
+	public void testGetContactsBadName(){
+		Set<Contact> getCont = cm.getContacts("Gandalf");
+		assertTrue(getCont.isEmpty());
+	}
 	/**
 	 * Test that getContacts(int) works with single int argument
 	 */
@@ -451,7 +457,7 @@ public class ContactManagerTest {
 		Calendar myCal = new GregorianCalendar(2013,3,4);
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013, 3, 4,13,0), "meeting two");
 		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,3,4,11,0), "meeting one");
-		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,5,2,19,30), "meeting three");
+		cm.addNewPastMeeting(contacts, new GregorianCalendar(2013,3,4,19,30), "meeting three");
 		cm.addFutureMeeting(contacts, new GregorianCalendar(2015,3,6));
 		List<Meeting> pastList = cm.getFutureMeetingList(myCal);
 		PastMeeting pm = (PastMeeting) pastList.get(0);
