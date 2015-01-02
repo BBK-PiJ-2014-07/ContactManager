@@ -29,7 +29,6 @@ public class ContactManagerTest {
 		try {
 			Files.copy(Paths.get("contacts.txt"),Paths.get("contactsCOPY.txt"));
 			Files.delete(Paths.get("contacts.txt"));
-			System.out.print("Before");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
