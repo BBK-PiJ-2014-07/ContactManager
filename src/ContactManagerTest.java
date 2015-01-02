@@ -555,6 +555,18 @@ public class ContactManagerTest {
 	}
 
 	/**
+	 * Test that init with an empty contacts.txt won't break ContactManager
+	 */
+	@Test
+	public void testEmptyContactsTxtInit() throws IOException {
+		Files.delete(Paths.get("contacts.txt"));
+		Files.createFile(Paths.get("contacts.txt"));
+		ContactManager cm1 = new ContactManagerImpl();
+		Contact fred = new ContactImpl(1, "Fred", "notes");
+		cm1.addNewContact("Fred", "notes");
+		assertTrue(cm1.getContacts(1).contains(fred));
+	}
+	/**
 	 * Test that getFutureMeetingList(Contact contact) throws IllegalArgumentException
 	 * if contact does not exist
 	 *
